@@ -145,3 +145,11 @@ void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 }
 #pragma endregion InterpAxisMapping
 #pragma endregion AxisMapping
+
+void ACP_Pawn_CombatPlane_KeyInput::PropellerTypeTick_Implementation()
+{
+}
+
+void ACP_Pawn_CombatPlane_KeyInput::JetEngineTypeTick_Implementation()
+{
+}
