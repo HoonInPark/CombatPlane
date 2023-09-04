@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class UNREAL_COMBATPLANE_API UCP_AI_CombatPlane : public UAnimInstance, public UCP_Pawn_To_AnimInstance
+class UNREAL_COMBATPLANE_API UCP_AI_CombatPlane : public UAnimInstance, public ICP_Pawn_To_AnimInstance
 {
 	GENERATED_BODY()
 	

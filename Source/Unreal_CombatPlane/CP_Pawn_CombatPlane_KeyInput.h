@@ -14,7 +14,7 @@
  * 다른 아무 관련 없는 클래스는 접근을 못하게 하고 자식 클래스만 접근하도록 만들어주는 protected의 사용법을 알아야 한다.
  */
 UCLASS()
-class UNREAL_COMBATPLANE_API ACP_Pawn_CombatPlane_KeyInput : public ACP_Pawn_CombatPlane_Tick, public UCP_Pawn_To_AnimInstance
+class UNREAL_COMBATPLANE_API ACP_Pawn_CombatPlane_KeyInput : public ACP_Pawn_CombatPlane_Tick, public ICP_Pawn_To_AnimInstance
 {
 	GENERATED_BODY()
 
