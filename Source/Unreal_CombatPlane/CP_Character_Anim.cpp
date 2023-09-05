@@ -22,7 +22,6 @@ ACP_Character_Anim::ACP_Character_Anim()
 		CPCHECK(Plane.Succeeded());
 		pBodyMeshComp->SetSkeletalMesh(Plane.Object);
 	}
-
 }
 
 // Called when the game starts or when spawned
@@ -91,6 +90,7 @@ void ACP_Character_Anim::ProcessYaw(float _Value)
 {
 	const float TargetSpeed_Yaw = _Value * AxisSpeed;
 	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 2.f);
+	CPLOG(Warning, TEXT(" CurrentSpeed_Yaw : %f"), CurrentSpeed_Yaw);
 
 	const float TargetSpeed_Roll = _Value * AxisSpeed;
 	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 1.f);
