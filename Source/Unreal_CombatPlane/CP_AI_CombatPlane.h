@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Unreal_CombatPlane.h"
-#include "CP_Pawn_To_AnimInstance.h"
+#include "CP_Character_To_AnimInst.h"
 #include "Animation/AnimInstance.h"
 #include "CP_AI_CombatPlane.generated.h"
 
@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class UNREAL_COMBATPLANE_API UCP_AI_CombatPlane : public UAnimInstance, public ICP_Pawn_To_AnimInstance
+class UNREAL_COMBATPLANE_API UCP_AI_CombatPlane : public UAnimInstance, public ICP_Character_To_AnimInst
 {
 	GENERATED_BODY()
 	
@@ -22,7 +22,8 @@ class UNREAL_COMBATPLANE_API UCP_AI_CombatPlane : public UAnimInstance, public I
 public:
 	virtual void NativeUpdateAnimation(float _DeltaSeconds) override;
 
-	virtual void PropellerTypeTick_Implementation() override;
-	virtual void JetEngineTypeTick_Implementation() override;
+private:
+	 virtual void PropellerTypeTick_Implementation() override;
+	 virtual void JetEngineTypeTick_Implementation() override;
 
 };

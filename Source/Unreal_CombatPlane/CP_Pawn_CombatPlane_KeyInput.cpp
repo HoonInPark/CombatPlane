@@ -50,10 +50,6 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 	AddActorLocalRotation(DeltaRotation);
 #pragma endregion InterpAxisMapping
 	
-	if (DeltaRotation.Pitch > 100.f)
-	{
-		CPLOG(Warning, TEXT("Rotation Spark Evoked in : %s"), *GetActorRotation().ToString());
-	}
 }
 
 // 이렇게 오버라이드한 함수를 정의하면 부모클래스가 구현한 이 함수의 기능은 자식 클래스에서는 작동하지 않는다. 로그 찍거나 디버깅해 보면 알 수 있다.
@@ -145,11 +141,3 @@ void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 }
 #pragma endregion InterpAxisMapping
 #pragma endregion AxisMapping
-
-void ACP_Pawn_CombatPlane_KeyInput::PropellerTypeTick_Implementation()
-{
-}
-
-void ACP_Pawn_CombatPlane_KeyInput::JetEngineTypeTick_Implementation()
-{
-}
