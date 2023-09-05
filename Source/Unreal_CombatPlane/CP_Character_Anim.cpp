@@ -34,43 +34,21 @@ void ACP_Character_Anim::BeginPlay()
 // Called every frame
 void ACP_Character_Anim::Tick(float DeltaTime)
 {
-	//CPLOG(Warning, TEXT(" DeltaTime is %f"), DeltaTime);
-	//MoveForwardWithInfPtEnum(DeltaTime);
-
-// 부드럽게 움직이는 거 없이 곧바로 축입력을 먹는 코드
-#pragma region AxisMapping
-	/*
-	const FVector LocalMove = FVector(DeltaTime * 1000.f, 0.f, 0.f);
-	AddActorLocalOffset(LocalMove);
-
-	FRotator DeltaRotation;
-	DeltaRotation.Pitch = CurrentSpeed_Pitch * DeltaTime; // 위/아래!
-	DeltaRotation.Yaw = CurrentSpeed_Yaw * DeltaTime; // 양 옆!
-
-	AddActorLocalRotation(DeltaRotation);
-	*/
-#pragma endregion AxisMapping
-
-	// 부드럽게 회전하도록 InterpTo를 사용하는 코드
-#pragma region InterpAxisMapping 
 	const FVector LocalMove = FVector(DeltaTime * 5000.f, 0.f, 0.f);
 	AddActorLocalOffset(LocalMove);
 
 	FRotator DeltaRotation;
 	DeltaRotation.Pitch = CurrentSpeed_Pitch * DeltaTime; // 위/아래!
 	DeltaRotation.Yaw = CurrentSpeed_Yaw * DeltaTime; // 양 옆!
+	CPLOG(Warning, TEXT(" DeltaRotation.Yaw : %f"), DeltaRotation.Yaw);
 
 	// Roll 축의 수평을 유지해 주는 코드
-#pragma region MaintainPlane
 	const float CurrentAngle_Roll = GetActorRotation().Roll;
 	const float TargetSpeed_Roll = -CurrentAngle_Roll * 1.f;
 	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, DeltaTime, 2.f);
 	DeltaRotation.Roll = CurrentSpeed_Roll * DeltaTime;
-#pragma endregion MaintainPlane
 
 	AddActorLocalRotation(DeltaRotation);
-#pragma endregion InterpAxisMapping
-
 }
 
 // Called to bind functionality to input
@@ -90,7 +68,7 @@ void ACP_Character_Anim::ProcessYaw(float _Value)
 {
 	const float TargetSpeed_Yaw = _Value * AxisSpeed;
 	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 2.f);
-	CPLOG(Warning, TEXT(" CurrentSpeed_Yaw : %f"), CurrentSpeed_Yaw);
+	CPLOG(Warning, TEXT(" TargetSpeed_Yaw : %f"), TargetSpeed_Yaw);
 
 	const float TargetSpeed_Roll = _Value * AxisSpeed;
 	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 1.f);

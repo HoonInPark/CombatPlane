@@ -33,10 +33,6 @@ public:
 	UCameraComponent* pCamera;
 
 private:
-	virtual void PropellerTypeTick_Implementation() override;
-	virtual void JetEngineTypeTick_Implementation() override;
-
-private:
 	float AxisSpeed{ 250.f };
 
 	float CurrentSpeed_Roll{ 0.f };
@@ -45,5 +41,9 @@ private:
 
 	void ProcessPitch(float _Value);
 	void ProcessYaw(float _Value);
+
+private:
+	virtual void PropellerTypeTick_Implementation() override;
+	virtual void JetEngineTypeTick_Implementation() override;
 
 };
