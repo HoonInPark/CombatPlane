@@ -31,6 +31,8 @@ public:
 	USkeletalMeshComponent* pBodyMeshComp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatPlane)
 	UCameraComponent* pCamera;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatPlane)
+	USpringArmComponent* pSpringArm;
 
 private:
 	float AxisSpeed{ 250.f };

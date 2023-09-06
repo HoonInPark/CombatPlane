@@ -12,11 +12,16 @@ ACP_Character_Anim::ACP_Character_Anim()
 	bDebuggingState = false;
 
 	pBodyMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PLANEBODY"));
+	pSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	pCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 
 	RootComponent = pBodyMeshComp;
-	pCamera->SetupAttachment(pBodyMeshComp);
-	pCamera->SetRelativeLocation(FVector(-500.f, 0.f, 250.f));
+	pSpringArm->SetupAttachment(pBodyMeshComp);
+	pCamera->SetupAttachment(pSpringArm);
+
+	pSpringArm->TargetArmLength = 500.f;
+	pSpringArm->SetRelativeLocationAndRotation(FVector(0.f, 0.f, 150.f), FRotator(-15.f, 0.f, 0.f));
+	//pCamera->SetRelativeLocation(FVector(-500.f, 0.f, 250.f));
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> Plane(TEXT("/Script/Engine.SkeletalMesh'/Game/_01_BasicSettings/SkeletalMeshes/SK_PLANE/SK_West_UAV_MQ1.SK_West_UAV_MQ1'"));
 	if (Plane.Succeeded())
