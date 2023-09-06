@@ -38,7 +38,7 @@ private:
 	float CurrentSpeed_Roll{ 0.f };
 	float CurrentSpeed_Pitch{ 0.f };
 	float CurrentSpeed_Yaw{ 0.f };
-	
+		
 	void ProcessPitch(float _Value);
 	void ProcessYaw(float _Value);
 	

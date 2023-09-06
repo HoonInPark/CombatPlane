@@ -19,7 +19,7 @@ ACP_Character_Anim::ACP_Character_Anim()
 	pSpringArm->SetupAttachment(pBodyMeshComp);
 	pCamera->SetupAttachment(pSpringArm);
 
-	pSpringArm->TargetArmLength = 500.f;
+	pSpringArm->TargetArmLength = 750.f;
 	pSpringArm->SetRelativeLocationAndRotation(FVector(0.f, 0.f, 150.f), FRotator(-15.f, 0.f, 0.f));
 	//pCamera->SetRelativeLocation(FVector(-500.f, 0.f, 250.f));
 

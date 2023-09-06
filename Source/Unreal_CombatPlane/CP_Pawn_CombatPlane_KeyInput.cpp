@@ -11,7 +11,7 @@ ACP_Pawn_CombatPlane_KeyInput::ACP_Pawn_CombatPlane_KeyInput()
 	pCamera->SetupAttachment(pSpringArm);
 	pCamera->SetRelativeLocation(FVector::ZeroVector);
 
-	pSpringArm->TargetArmLength = 500.f;
+	pSpringArm->TargetArmLength = 750.f;
 	pSpringArm->SetRelativeLocationAndRotation(FVector(0.f, 0.f, 150.f), FRotator(-15.f, 0.f, 0.f));
 }
 
@@ -62,6 +62,8 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 	AddActorLocalRotation(DeltaRotation);
 #pragma endregion InterpAxisMapping
 	
+	pSpringArm->AddLocalRotation(DeltaRotation.GetInverse());
+
 }
 
 // 이렇게 오버라이드한 함수를 정의하면 부모클래스가 구현한 이 함수의 기능은 자식 클래스에서는 작동하지 않는다. 로그 찍거나 디버깅해 보면 알 수 있다.
@@ -149,8 +151,9 @@ void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 	const float TargetSpeed_Yaw = _Value * AxisSpeed;
 	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 2.f);
 	
+	// 고개를 갸우뚱하는 방향으로 회전시켜준다.
 	const float TargetSpeed_Roll = _Value * AxisSpeed;
-	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 1.f);
+	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 2.f);
 	
 }
 #pragma endregion InterpAxisMapping
