@@ -46,4 +46,15 @@ private:
 	virtual void PropellerTypeTick_Implementation() override;
 	virtual void JetEngineTypeTick_Implementation() override;
 
+#pragma region DebuggingArea
+protected:
+	FTimerHandle TimerHandle;
+
+private:
+	bool bDebuggingState;
+
+	void SetDebuggingMode();
+	void NonDebuggingTick(float _DeltaTime);
+	void DebuggingTick(float _DeltaTime);
+#pragma endregion DebuggingArea
 };

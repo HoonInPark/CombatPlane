@@ -92,6 +92,8 @@ void ACP_Pawn_CombatPlane_KeyInput::MoveForwardWithInfPtEnum(float _DeltaTime)
 // 여기서 마우스로부터 축입력을 받을 것임.
 void ACP_Pawn_CombatPlane_KeyInput::SetupPlayerInputComponent(UInputComponent* _InputComponent)
 {
+	Super::SetupPlayerInputComponent(_InputComponent);
+
 	_InputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Pawn_CombatPlane_KeyInput::ProcessPitch); // delegate!
 	_InputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Pawn_CombatPlane_KeyInput::ProcessYaw); 
 }
