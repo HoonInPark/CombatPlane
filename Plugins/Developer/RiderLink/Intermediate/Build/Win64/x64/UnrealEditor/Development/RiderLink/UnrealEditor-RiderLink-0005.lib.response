@@ -6,6 +6,6 @@
 /NAME:"UnrealEditor-RiderLink-0005.dll"
 /IGNORE:4221
 /NODEFAULTLIB
-"D:\lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLink\Module.RiderLink.cpp.obj"
-"D:\lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLink\Default.rc2.res"
-/OUT:"D:\lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLink\UnrealEditor-RiderLink-0005.lib"
+"D:\_Unreal\_lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLink\Module.RiderLink.cpp.obj"
+"D:\_Unreal\_lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLink\Default.rc2.res"
+/OUT:"D:\_Unreal\_lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLink\UnrealEditor-RiderLink-0005.lib"

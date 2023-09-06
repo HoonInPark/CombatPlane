@@ -48,22 +48,15 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 	AddActorLocalOffset(LocalMove);
 
 	FRotator DeltaRotation;
-	DeltaRotation.Pitch = CurrentSpeed_Pitch * DeltaTime; // 위/아래!
-	DeltaRotation.Yaw = CurrentSpeed_Yaw * DeltaTime; // 양 옆!
-
-// Roll 축의 수평을 유지해 주는 코드
-#pragma region MaintainPlane
-	const float CurrentAngle_Roll = GetActorRotation().Roll;
-	const float TargetSpeed_Roll = -CurrentAngle_Roll * 1.f;
-	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, DeltaTime, 2.f);
-	DeltaRotation.Roll = CurrentSpeed_Roll * DeltaTime;
-#pragma endregion MaintainPlane
+	DeltaRotation.Pitch = CurrentSpeed_Pitch * DeltaTime; // 끄덕끄덕
+	DeltaRotation.Yaw = CurrentSpeed_Yaw * DeltaTime; // 도리도리
+	DeltaRotation.Roll = StabilizeRoll(DeltaTime); // 갸우뚱 
 
 	AddActorLocalRotation(DeltaRotation);
 #pragma endregion InterpAxisMapping
 	
-	pSpringArm->AddLocalRotation(DeltaRotation.GetInverse());
-	StabilizeSpringArm(DeltaTime);
+	pSpringArm->AddLocalRotation(0.5f * DeltaRotation.GetInverse());
+	StabilizeSpringArm(DeltaRotation.GetInverse());
 	
 }
 
@@ -160,8 +153,22 @@ void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 #pragma endregion InterpAxisMapping
 #pragma endregion AxisMapping
 
-void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(float _DeltaTime)
+#pragma region StabilizeArea
+// Roll 축의 수평을 유지해 주는 함수
+float ACP_Pawn_CombatPlane_KeyInput::StabilizeRoll(float _DeltaTime)
 {
-	
+	const float CurrentAngle_Roll = GetActorRotation().Roll;
+	const float TargetSpeed_Roll = -CurrentAngle_Roll * 1.f;
+	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, _DeltaTime, 2.f);
 
+	return CurrentSpeed_Roll * _DeltaTime;
 }
+
+// _DeltaRotation은 움직이는 각도에 반대 방향으로 SpringArm을 돌리는 각속도이다.
+void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(FRotator _DeltaRotation) 
+{
+	const FRotator CurrentAngle_SpringArm = pSpringArm->GetComponentRotation();
+	const FRotator TargetSpeed_SpringArm = -1 * CurrentAngle_SpringArm * 1.f;
+	CurrentSpeed_SpringArm = FMath::RInterpTo(CurrentSpeed_SpringArm, TargetSpeed_SpringArm, GetWorld()->GetDeltaSeconds(), 2.f);
+}
+#pragma endregion StabilizeArea
