@@ -11,7 +11,7 @@ ACP_Pawn_CombatPlane_KeyInput::ACP_Pawn_CombatPlane_KeyInput()
 	pCamera->SetupAttachment(pSpringArm);
 	pCamera->SetRelativeLocation(FVector::ZeroVector);
 
-	pSpringArm->TargetArmLength = 750.f;
+	pSpringArm->TargetArmLength = 1000.f;
 	pSpringArm->SetRelativeLocationAndRotation(FVector(0.f, 0.f, 150.f), FRotator(-15.f, 0.f, 0.f));
 }
 
@@ -63,7 +63,8 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 #pragma endregion InterpAxisMapping
 	
 	pSpringArm->AddLocalRotation(DeltaRotation.GetInverse());
-
+	StabilizeSpringArm(DeltaTime);
+	
 }
 
 // 이렇게 오버라이드한 함수를 정의하면 부모클래스가 구현한 이 함수의 기능은 자식 클래스에서는 작동하지 않는다. 로그 찍거나 디버깅해 보면 알 수 있다.
@@ -158,3 +159,9 @@ void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 }
 #pragma endregion InterpAxisMapping
 #pragma endregion AxisMapping
+
+void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(float _DeltaTime)
+{
+	
+
+}

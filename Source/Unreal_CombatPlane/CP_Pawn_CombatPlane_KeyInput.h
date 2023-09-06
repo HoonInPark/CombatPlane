@@ -33,14 +33,16 @@ public:
 	virtual void SetupPlayerInputComponent(UInputComponent* _InputComponent) override;
 
 private:
-	float AxisSpeed{ 250.f };
+	const float AxisSpeed{ 250.f };
 
 	float CurrentSpeed_Roll{ 0.f };
 	float CurrentSpeed_Pitch{ 0.f };
 	float CurrentSpeed_Yaw{ 0.f };
-		
+	
 	void ProcessPitch(float _Value);
 	void ProcessYaw(float _Value);
+
+	void StabilizeSpringArm(float _DeltaTime);
 	
 private:
 	USpringArmComponent* pSpringArm;
