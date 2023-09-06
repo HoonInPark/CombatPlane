@@ -17,6 +17,9 @@ class UNREAL_COMBATPLANE_API ACP_Pawn_CombatPlane_KeyInput : public ACP_Pawn_Com
 {
 	GENERATED_BODY()
 
+public:
+	ACP_Pawn_CombatPlane_KeyInput();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -39,4 +42,6 @@ private:
 	void ProcessPitch(float _Value);
 	void ProcessYaw(float _Value);
 	
+private:
+	USpringArmComponent* pSpringArm;
 };

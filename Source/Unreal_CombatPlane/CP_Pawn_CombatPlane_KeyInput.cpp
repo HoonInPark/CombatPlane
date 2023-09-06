@@ -3,6 +3,18 @@
 
 #include "CP_Pawn_CombatPlane_KeyInput.h"
 
+ACP_Pawn_CombatPlane_KeyInput::ACP_Pawn_CombatPlane_KeyInput()
+{
+	pSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
+
+	pSpringArm->SetupAttachment(pBodyMeshComp);
+	pCamera->SetupAttachment(pSpringArm);
+	pCamera->SetRelativeLocation(FVector::ZeroVector);
+
+	pSpringArm->TargetArmLength = 500.f;
+	pSpringArm->SetRelativeLocationAndRotation(FVector(0.f, 0.f, 150.f), FRotator(-15.f, 0.f, 0.f));
+}
+
 void ACP_Pawn_CombatPlane_KeyInput::BeginPlay()
 {
 	Super::BeginPlay();
