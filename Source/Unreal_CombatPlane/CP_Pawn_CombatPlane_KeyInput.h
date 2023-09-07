@@ -39,13 +39,13 @@ private:
 	float CurrentSpeed_Pitch{ 0.f };
 	float CurrentSpeed_Yaw{ 0.f };
 	
-	FRotator CurrentSpeed_SpringArm{ 0.f };
-
 	void ProcessPitch(float _Value);
 	void ProcessYaw(float _Value);
 
 	float StabilizeRoll(float _DeltaTime);
-	void StabilizeSpringArm(FRotator _DeltaRotation);
+	
+	FRotator DefaultSpringArmRotation{ FRotator(-15.f, 0.f, 0.f) };
+	void StabilizeSpringArm(float _DeltaTime);
 	
 private:
 	USpringArmComponent* pSpringArm;

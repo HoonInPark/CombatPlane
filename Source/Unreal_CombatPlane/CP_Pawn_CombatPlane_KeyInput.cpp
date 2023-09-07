@@ -12,7 +12,7 @@ ACP_Pawn_CombatPlane_KeyInput::ACP_Pawn_CombatPlane_KeyInput()
 	pCamera->SetRelativeLocation(FVector::ZeroVector);
 
 	pSpringArm->TargetArmLength = 1000.f;
-	pSpringArm->SetRelativeLocationAndRotation(FVector(0.f, 0.f, 150.f), FRotator(-15.f, 0.f, 0.f));
+	pSpringArm->SetRelativeLocationAndRotation(FVector(0.f, 0.f, 150.f), DefaultSpringArmRotation);
 }
 
 void ACP_Pawn_CombatPlane_KeyInput::BeginPlay()
@@ -55,8 +55,8 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 	AddActorLocalRotation(DeltaRotation);
 #pragma endregion InterpAxisMapping
 	
-	pSpringArm->AddLocalRotation(0.5f * DeltaRotation.GetInverse());
-	StabilizeSpringArm(DeltaRotation.GetInverse());
+	pSpringArm->AddLocalRotation(0.1f * DeltaRotation.GetInverse());
+	StabilizeSpringArm(DeltaTime);
 	
 }
 
@@ -164,11 +164,10 @@ float ACP_Pawn_CombatPlane_KeyInput::StabilizeRoll(float _DeltaTime)
 	return CurrentSpeed_Roll * _DeltaTime;
 }
 
-// _DeltaRotation은 움직이는 각도에 반대 방향으로 SpringArm을 돌리는 각속도이다.
-void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(FRotator _DeltaRotation) 
+// 여기 _DeltaRotation은 움직이는 각도에 반대 방향으로 SpringArm을 돌리는 각속도이다.
+void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(float _DeltaTime)
 {
-	const FRotator CurrentAngle_SpringArm = pSpringArm->GetComponentRotation();
-	const FRotator TargetSpeed_SpringArm = -1 * CurrentAngle_SpringArm * 1.f;
-	CurrentSpeed_SpringArm = FMath::RInterpTo(CurrentSpeed_SpringArm, TargetSpeed_SpringArm, GetWorld()->GetDeltaSeconds(), 2.f);
+	if (pSpringArm->GetRelativeRotation() != DefaultSpringArmRotation)
+		pSpringArm->SetRelativeRotation(FMath::RInterpTo(pSpringArm->GetRelativeRotation(), DefaultSpringArmRotation, _DeltaTime, 1.f));
 }
 #pragma endregion StabilizeArea

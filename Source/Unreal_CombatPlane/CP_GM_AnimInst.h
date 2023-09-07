@@ -4,7 +4,7 @@
 
 #include "Unreal_CombatPlane.h"
 #include "CP_PC_CombatPlaneController.h"
-#include "CP_Character_Anim.h"
+#include "CP_Pawn_AnimInst.h"
 #include "GameFramework/GameModeBase.h"
 #include "CP_GM_AnimInst.generated.h"
 

@@ -6,6 +6,6 @@
 /NAME:"UnrealEditor-RiderLogging-0009.dll"
 /IGNORE:4221
 /NODEFAULTLIB
-"D:\OneDrive - 한동대학교\lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLogging\Module.RiderLogging.cpp.obj"
-"D:\OneDrive - 한동대학교\lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLogging\Default.rc2.res"
-/OUT:"D:\OneDrive - 한동대학교\lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLogging\UnrealEditor-RiderLogging-0009.lib"
+"D:\_Unreal\_lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLogging\Module.RiderLogging.cpp.obj"
+"D:\_Unreal\_lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLogging\Default.rc2.res"
+/OUT:"D:\_Unreal\_lec_My\_03_Unreal_Basic\Unreal_CombatPlane\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderLogging\UnrealEditor-RiderLogging-0009.lib"

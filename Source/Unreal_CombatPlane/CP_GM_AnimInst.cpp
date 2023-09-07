@@ -5,7 +5,7 @@
 
 ACP_GM_AnimInst::ACP_GM_AnimInst()
 {
-	DefaultPawnClass = ACP_Character_Anim::StaticClass();
+	DefaultPawnClass = ACP_Pawn_AnimInst::StaticClass();
 	PlayerControllerClass = ACP_PC_CombatPlaneController::StaticClass();
 }
 
