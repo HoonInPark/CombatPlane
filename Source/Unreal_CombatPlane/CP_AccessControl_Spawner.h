@@ -9,7 +9,8 @@
 #include "CP_AccessControl_Spawner.generated.h"
 
 USTRUCT(BlueprintType)
-struct FHorizontalPoint {
+struct FHorizontalPoint 
+{
 	GENERATED_BODY()
 
 	UPROPERTY()

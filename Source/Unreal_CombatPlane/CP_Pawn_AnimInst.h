@@ -3,8 +3,8 @@
 #pragma once
 
 #include "Unreal_CombatPlane.h"
-#include "CP_Pawn_To_AnimInst.h"
 #include "CP_Pawn_CombatPlane_KeyInput.h"
+#include "CP_Pawn_To_AnimInst.h"
 #include "CP_Pawn_AnimInst.generated.h"
 
 /**
@@ -22,6 +22,6 @@ private:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	virtual void PropellerTypeTick_Implementation() override;
-	virtual void JetEngineTypeTick_Implementation() override;
+	virtual FPawnMovement PropellerTypeTick_Implementation() override;
+	virtual FPawnMovement JetEngineTypeTick_Implementation() override;
 };

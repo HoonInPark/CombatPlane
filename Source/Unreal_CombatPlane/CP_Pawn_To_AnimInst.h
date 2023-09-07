@@ -6,6 +6,17 @@
 #include "UObject/Interface.h"
 #include "CP_Pawn_To_AnimInst.generated.h"
 
+USTRUCT(BlueprintType)
+struct FPawnMovement
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FRotator Pawn_Rotation;
+	UPROPERTY()
+	float Pawn_Speed;
+};
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UCP_Pawn_To_AnimInst : public UInterface
@@ -23,6 +34,8 @@ class UCP_Pawn_To_AnimInst : public UInterface
  * 똑같은 시그니처의 인터페이스 함수를 Pawn에서 구현해 주는 것이 자연스럽다. 이 두 함수를 통해 서로 값을 주고받을 수 있다.
  * 
  */
+struct FPawnMovement;
+
 class UNREAL_COMBATPLANE_API ICP_Pawn_To_AnimInst
 {
 	GENERATED_BODY()
@@ -30,8 +43,8 @@ class UNREAL_COMBATPLANE_API ICP_Pawn_To_AnimInst
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interface")
-	void PropellerTypeTick();
+	FPawnMovement PropellerTypeTick();
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interface")
-	void JetEngineTypeTick();
+	FPawnMovement JetEngineTypeTick();
 
 };

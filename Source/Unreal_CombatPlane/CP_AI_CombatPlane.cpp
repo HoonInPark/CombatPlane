@@ -15,11 +15,15 @@ void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 	
 }
 
-void UCP_AI_CombatPlane::PropellerTypeTick_Implementation()
+FPawnMovement UCP_AI_CombatPlane::PropellerTypeTick_Implementation()
 {
-	//ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(Pawn);
+	FPawnMovement test = { FRotator::ZeroRotator, 0.f };
+	return test;
 }
 
-void UCP_AI_CombatPlane::JetEngineTypeTick_Implementation()
+FPawnMovement UCP_AI_CombatPlane::JetEngineTypeTick_Implementation()
 {
+	FPawnMovement test = { FRotator::ZeroRotator, 0.f };
+	return test;
 }
+	

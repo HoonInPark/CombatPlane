@@ -15,10 +15,14 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 
 }
 
-void ACP_Pawn_AnimInst::PropellerTypeTick_Implementation()
+FPawnMovement ACP_Pawn_AnimInst::PropellerTypeTick_Implementation()
 {
+	FPawnMovement test = { FRotator::ZeroRotator, 0.f };
+	return test;
 }
 
-void ACP_Pawn_AnimInst::JetEngineTypeTick_Implementation()
+FPawnMovement ACP_Pawn_AnimInst::JetEngineTypeTick_Implementation()
 {
+	FPawnMovement test = { FRotator::ZeroRotator, 0.f };
+	return test;
 }
