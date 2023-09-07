@@ -26,4 +26,3 @@ FPawnMovement UCP_AI_CombatPlane::JetEngineTypeTick_Implementation()
 	FPawnMovement test = { FRotator::ZeroRotator, 0.f };
 	return test;
 }
-	

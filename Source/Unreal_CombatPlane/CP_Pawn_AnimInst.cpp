@@ -3,6 +3,10 @@
 
 #include "CP_Pawn_AnimInst.h"
 
+ACP_Pawn_AnimInst::ACP_Pawn_AnimInst()
+{
+}
+
 void ACP_Pawn_AnimInst::BeginPlay()
 {
 	Super::BeginPlay();

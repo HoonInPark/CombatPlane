@@ -45,8 +45,8 @@ private:
 	void ProcessYaw(float _Value);
 
 private:
-	virtual void PropellerTypeTick_Implementation() override;
-	virtual void JetEngineTypeTick_Implementation() override;
+	virtual FPawnMovement PropellerTypeTick_Implementation() override;
+	virtual FPawnMovement JetEngineTypeTick_Implementation() override;
 
 #pragma region DebuggingArea
 protected:

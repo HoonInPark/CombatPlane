@@ -34,7 +34,7 @@ class UCP_Pawn_To_AnimInst : public UInterface
  * 똑같은 시그니처의 인터페이스 함수를 Pawn에서 구현해 주는 것이 자연스럽다. 이 두 함수를 통해 서로 값을 주고받을 수 있다.
  * 
  */
-struct FPawnMovement;
+//struct FPawnMovement;
 
 class UNREAL_COMBATPLANE_API ICP_Pawn_To_AnimInst
 {

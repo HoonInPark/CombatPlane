@@ -15,6 +15,8 @@ class UNREAL_COMBATPLANE_API ACP_Pawn_AnimInst : public ACP_Pawn_CombatPlane_Key
 {
 	GENERATED_BODY()
 
+	ACP_Pawn_AnimInst();
+
 protected:
 	virtual void BeginPlay() override;
 
