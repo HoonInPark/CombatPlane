@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Unreal_CombatPlane.h"
+#include "CP_Pawn_To_AnimInst.h"
 #include "CP_Pawn_CombatPlane_KeyInput.h"
 #include "CP_Pawn_AnimInst.generated.h"
 
@@ -10,8 +11,17 @@
  * 
  */
 UCLASS()
-class UNREAL_COMBATPLANE_API ACP_Pawn_AnimInst : public ACP_Pawn_CombatPlane_KeyInput
+class UNREAL_COMBATPLANE_API ACP_Pawn_AnimInst : public ACP_Pawn_CombatPlane_KeyInput, public ICP_Pawn_To_AnimInst
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+	virtual void Tick(float DeltaTime) override;
+
+private:
+	virtual void PropellerTypeTick_Implementation() override;
+	virtual void JetEngineTypeTick_Implementation() override;
 };

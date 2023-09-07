@@ -11,20 +11,13 @@ UCP_AI_CombatPlane::UCP_AI_CombatPlane()
 void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(_DeltaSeconds);
-}
 
-// 프로펠러를 돌리는 함수
-void UCP_AI_CombatPlane::SpinPropeller()
-{
-}
-
-// 수평 방향을 잡는 날개의 각도를 변형해 주는 함수
-void UCP_AI_CombatPlane::MoveAileron()
-{
+	
 }
 
 void UCP_AI_CombatPlane::PropellerTypeTick_Implementation()
 {
+	//ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(Pawn);
 }
 
 void UCP_AI_CombatPlane::JetEngineTypeTick_Implementation()

@@ -22,8 +22,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
-private:
 	virtual void Tick(float DeltaTime) override;
 
 private:
@@ -44,9 +42,12 @@ private:
 
 	float StabilizeRoll(float _DeltaTime);
 	
-	FRotator DefaultSpringArmRotation{ FRotator(-15.f, 0.f, 0.f) };
+	const FRotator DefaultSpringArmRotation{ FRotator(-15.f, 0.f, 0.f) };
 	void StabilizeSpringArm(float _DeltaTime);
 	
 private:
 	USpringArmComponent* pSpringArm;
+
+protected:
+	FRotator DeltaRotation{ FRotator::ZeroRotator };
 };
