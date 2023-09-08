@@ -21,8 +21,8 @@ public:
 	virtual void NativeUpdateAnimation(float _DeltaSeconds) override;
 
 private:
-	virtual FPawnMovement PropellerTypeTick_Implementation() override;
-	virtual FPawnMovement JetEngineTypeTick_Implementation() override;
+	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
+	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 
 private:
 	float PropellerRotation{ 0.f };

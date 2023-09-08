@@ -3,6 +3,8 @@
 
 #include "CP_AI_CombatPlane.h"
 
+#include "CP_Pawn_AnimInst.h"
+
 UCP_AI_CombatPlane::UCP_AI_CombatPlane()
 {
 }
@@ -12,17 +14,12 @@ void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(_DeltaSeconds);
 
-	
 }
 
-FPawnMovement UCP_AI_CombatPlane::PropellerTypeTick_Implementation()
+void UCP_AI_CombatPlane::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
 {
-	FPawnMovement test = { FRotator::ZeroRotator, 0.f };
-	return test;
 }
 
-FPawnMovement UCP_AI_CombatPlane::JetEngineTypeTick_Implementation()
+void UCP_AI_CombatPlane::JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement)
 {
-	FPawnMovement test = { FRotator::ZeroRotator, 0.f };
-	return test;
 }

@@ -70,6 +70,8 @@ void ACP_Pawn_CombatPlane_Tick::MoveForwardWithInfPt(float _DeltaTime)
 	case 2:
 		SetActorLocation(GetActorLocation() + FVector(_DeltaTime * 750.f, 0.f, 0.f));
 		break;
+	default:
+		break;
 	}
 }
 

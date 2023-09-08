@@ -46,7 +46,7 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 #pragma region InterpAxisMapping 
 	const FVector LocalMove = FVector(DeltaTime * 5000.f, 0.f, 0.f);
 	AddActorLocalOffset(LocalMove);
-
+	
 	DeltaRotation.Pitch = CurrentSpeed_Pitch * DeltaTime; // ²ô´ö²ô´ö
 	DeltaRotation.Yaw = CurrentSpeed_Yaw * DeltaTime; // µµ¸®µµ¸®
 	DeltaRotation.Roll = StabilizeRoll(DeltaTime); // °¼¿ì¶× 

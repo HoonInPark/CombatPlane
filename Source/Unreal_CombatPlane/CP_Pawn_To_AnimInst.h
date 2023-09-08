@@ -12,9 +12,9 @@ struct FPawnMovement
 	GENERATED_BODY()
 
 	UPROPERTY()
-	FRotator Pawn_Rotation;
+	FRotator Speed_Rotation;
 	UPROPERTY()
-	float Pawn_Speed;
+	float Speed_Move;
 };
 
 // This class does not need to be modified.
@@ -43,8 +43,8 @@ class UNREAL_COMBATPLANE_API ICP_Pawn_To_AnimInst
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interface")
-	FPawnMovement PropellerTypeTick();
+	void PropellerTypeTick(FPawnMovement _PawnMovement);
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interface")
-	FPawnMovement JetEngineTypeTick();
+	void JetEngineTypeTick(FPawnMovement _PawnMovement);
 
 };

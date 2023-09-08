@@ -45,7 +45,8 @@ private:
 	const FRotator DefaultSpringArmRotation{ FRotator(-15.f, 0.f, 0.f) };
 	void StabilizeSpringArm(float _DeltaTime);
 	
-private:
+public:
+	UPROPERTY()
 	USpringArmComponent* pSpringArm;
 
 protected:

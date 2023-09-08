@@ -138,16 +138,10 @@ void ACP_Character_Anim::DebuggingTick(float _DeltaTime)
 }
 #pragma endregion DebuggingArea
 
-FPawnMovement ACP_Character_Anim::PropellerTypeTick_Implementation()
+void ACP_Character_Anim::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
 {
-	FPawnMovement test;
-	test = { FRotator::ZeroRotator, 0.f };
-	return test;
 }
 
-FPawnMovement ACP_Character_Anim::JetEngineTypeTick_Implementation()
+void ACP_Character_Anim::JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement)
 {
-	FPawnMovement test;
-	test = { FRotator::ZeroRotator, 0.f };
-	return test;
 }

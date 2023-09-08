@@ -24,6 +24,6 @@ private:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	virtual FPawnMovement PropellerTypeTick_Implementation() override;
-	virtual FPawnMovement JetEngineTypeTick_Implementation() override;
+	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
+	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 };
