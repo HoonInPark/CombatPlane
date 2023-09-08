@@ -3,8 +3,6 @@
 
 #include "CP_AI_CombatPlane.h"
 
-#include "CP_Pawn_AnimInst.h"
-
 UCP_AI_CombatPlane::UCP_AI_CombatPlane()
 {
 }

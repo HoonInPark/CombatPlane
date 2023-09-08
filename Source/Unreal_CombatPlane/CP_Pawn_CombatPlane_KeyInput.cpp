@@ -43,9 +43,7 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 #pragma endregion AxisMapping
 	
 // 부드럽게 회전하도록 InterpTo를 사용하는 코드
-#pragma region InterpAxisMapping 
-	const FVector LocalMove = FVector(DeltaTime * 5000.f, 0.f, 0.f);
-	AddActorLocalOffset(LocalMove);
+#pragma region InterpAxisMapping
 	
 	DeltaRotation.Pitch = CurrentSpeed_Pitch * DeltaTime; // 끄덕끄덕
 	DeltaRotation.Yaw = CurrentSpeed_Yaw * DeltaTime; // 도리도리
@@ -164,9 +162,16 @@ float ACP_Pawn_CombatPlane_KeyInput::StabilizeRoll(float _DeltaTime)
 }
 
 // 여기 _DeltaRotation은 움직이는 각도에 반대 방향으로 SpringArm을 돌리는 각속도이다.
-void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(float _DeltaTime)
+void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(float _DeltaTime) const
 {
 	if (pSpringArm->GetRelativeRotation() != DefaultSpringArmRotation)
 		pSpringArm->SetRelativeRotation(FMath::RInterpTo(pSpringArm->GetRelativeRotation(), DefaultSpringArmRotation, _DeltaTime, 1.f));
+}
+
+void ACP_Pawn_CombatPlane_KeyInput::AddLocalMove(float _DeltaTime)
+{
+	LocalMove_X = 5000.f;
+	const FVector LocalMove_KeyInput = FVector(_DeltaTime * LocalMove_X, 0.f, 0.f);
+	AddActorLocalOffset(LocalMove_KeyInput);
 }
 #pragma endregion StabilizeArea

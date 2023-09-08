@@ -26,4 +26,7 @@ private:
 private:
 	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
+
+private:
+	virtual void AddLocalMove(float _DeltaTime) override;
 };

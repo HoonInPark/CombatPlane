@@ -43,7 +43,7 @@ private:
 	float StabilizeRoll(float _DeltaTime);
 	
 	const FRotator DefaultSpringArmRotation{ FRotator(-15.f, 0.f, 0.f) };
-	void StabilizeSpringArm(float _DeltaTime);
+	void StabilizeSpringArm(float _DeltaTime) const;
 	
 public:
 	UPROPERTY()
@@ -51,4 +51,6 @@ public:
 
 protected:
 	FRotator DeltaRotation{ FRotator::ZeroRotator };
+	float LocalMove_X{ 0.f };
+	virtual void AddLocalMove(float _DeltaTime);
 };
