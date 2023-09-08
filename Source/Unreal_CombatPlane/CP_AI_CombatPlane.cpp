@@ -16,6 +16,8 @@ void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 
 void UCP_AI_CombatPlane::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
 {
+	CPLOG(Warning, TEXT(" _PawnMovement.Speed_Move : %f"), _PawnMovement.Speed_Move);
+	CPLOG(Warning, TEXT(" _PawnMovement.Speed_Rotation : %s"), *_PawnMovement.Speed_Rotation.ToString());
 }
 
 void UCP_AI_CombatPlane::JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement)

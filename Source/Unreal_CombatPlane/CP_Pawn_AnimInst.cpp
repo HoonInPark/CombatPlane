@@ -41,7 +41,12 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	 */
 	AddLocalMove(DeltaTime);
 
-	// 여기서 특정 객체에 신호를 보내야 하는데, 단순히 클래스의 이름만 알아서는 안되고, 구체적으로 어디에 객체화된 것인지 명시해야 한다.
+	/*
+	 * 여기서 특정 객체에 신호를 보내야 하는데, 단순히 클래스의 이름만 알아서는 안되고,
+	 * 구체적으로 어디에 객체화된 것인지 명시해야 한다.
+	 * 그리고 바로 다음 인수로는 원래 그 함수가 받는 매개변수를 나타낸다.
+	 * 이 인수를 통해 다른 클래스에 값을 보낼 수 있다.
+	 */
 	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
 		pAnimInstance,
 		{DeltaRotation, LocalMove_X});
