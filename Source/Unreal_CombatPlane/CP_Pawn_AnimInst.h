@@ -22,6 +22,7 @@ protected:
 
 private:
 	virtual void Tick(float DeltaTime) override;
+	virtual void PostInitializeComponents() override;
 
 private:
 	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
@@ -29,4 +30,9 @@ private:
 
 private:
 	virtual void AddLocalMove(float _DeltaTime) override;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=AnonymousBat)
+	UAnimInstance* pAnimInstance;
+
 };

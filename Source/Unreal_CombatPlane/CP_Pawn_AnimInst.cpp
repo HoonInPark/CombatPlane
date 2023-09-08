@@ -6,6 +6,23 @@
 
 ACP_Pawn_AnimInst::ACP_Pawn_AnimInst()
 {
+	pAnimInstance = nullptr;
+}
+
+void ACP_Pawn_AnimInst::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	UAnimInstance* CurrentAnimInstance = pBodyMeshComp->GetAnimInstance();
+
+	if (!CurrentAnimInstance)
+	{
+		pAnimInstance = NewObject<UCP_AI_CombatPlane>(pBodyMeshComp,
+		                                              UCP_AI_CombatPlane::StaticClass());
+		pBodyMeshComp->SetAnimInstanceClass(pAnimInstance->GetClass());
+	}
+	else
+		pAnimInstance = Cast<UCP_AI_CombatPlane>(CurrentAnimInstance);
 }
 
 void ACP_Pawn_AnimInst::BeginPlay()
@@ -24,8 +41,9 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	 */
 	AddLocalMove(DeltaTime);
 
+	// 여기서 특정 객체에 신호를 보내야 하는데, 단순히 클래스의 이름만 알아서는 안되고, 구체적으로 어디에 객체화된 것인지 명시해야 한다.
 	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
-		UGameplayStatics::GetActorOfClass(GetWorld(), UCP_AI_CombatPlane::StaticClass()),
+		pAnimInstance,
 		{DeltaRotation, LocalMove_X});
 }
 
