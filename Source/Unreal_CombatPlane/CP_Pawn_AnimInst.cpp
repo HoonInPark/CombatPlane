@@ -9,6 +9,7 @@ ACP_Pawn_AnimInst::ACP_Pawn_AnimInst()
 	pAnimInstance = nullptr;
 }
 
+// 컴포넌트가 모두 로드되고 해당 클래스의 모든 변수들이 초기화된 이후에 호출되는 함수.
 void ACP_Pawn_AnimInst::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -18,11 +19,15 @@ void ACP_Pawn_AnimInst::PostInitializeComponents()
 	if (!CurrentAnimInstance)
 	{
 		pAnimInstance = NewObject<UCP_AI_CombatPlane>(pBodyMeshComp,
-		                                              UCP_AI_CombatPlane::StaticClass());
+			UCP_AI_CombatPlane::StaticClass());
 		pBodyMeshComp->SetAnimInstanceClass(pAnimInstance->GetClass());
+		CPLOG_S(Warning, TEXT("CurrentAnimInstance not yet prepared"));
 	}
-	else
+	else 
+	{
 		pAnimInstance = Cast<UCP_AI_CombatPlane>(CurrentAnimInstance);
+		CPLOG_S(Warning, TEXT("CurrentAnimInstance prepared"));
+	}
 }
 
 void ACP_Pawn_AnimInst::BeginPlay()
@@ -49,7 +54,7 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	 */
 	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
 		pAnimInstance,
-		{DeltaRotation, LocalMove_X});
+		{ DeltaRotation, LocalMove_X });
 }
 
 void ACP_Pawn_AnimInst::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)

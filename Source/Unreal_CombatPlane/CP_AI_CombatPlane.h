@@ -26,4 +26,13 @@ private:
 
 private:
 	float PropellerRotation{ 0.f };
+
+	// 다음 변수들은 
+public:
+	// 가속도를 결정할 것이다
+	UPROPERTY(BlueprintReadOnly)
+	float Multiplier_Propeller;
+	// 각도와 곱해줄 것이다.
+	UPROPERTY(BlueprintReadOnly)
+	float Multiplier_Aileron;
 };
