@@ -3,17 +3,13 @@
 
 #include "CP_AI_CombatPlane.h"
 
-UCP_AI_CombatPlane::UCP_AI_CombatPlane()
-{
-}
-
 // AnimInstance에서의 Tick의 역할을 하는 함수
 void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(_DeltaSeconds);
 
 	InterpPawnSpeed(_DeltaSeconds, PawnMovement_Tick);
-	CPLOG(Warning, TEXT(" Speed_Rotation.Roll : %f, Speed_Move : %f"), PawnMovement_AnimInst.Speed_Rotation.Roll, PawnMovement_AnimInst.Speed_Move);
+	ProcessSpeed(PawnMovement_AnimInst);
 }
 
 /*
@@ -33,10 +29,13 @@ void UCP_AI_CombatPlane::JetEngineTypeTick_Implementation(FPawnMovement _PawnMov
 
 void UCP_AI_CombatPlane::InterpPawnSpeed(float _DeltaSeconds, const FPawnMovement& _PawnMovement)
 {
-	PawnMovement_AnimInst.Speed_Rotation.Roll = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Rotation.Roll, _PawnMovement.Speed_Rotation.Roll, _DeltaSeconds, 1.f);
-	PawnMovement_AnimInst.Speed_Move = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Move, _PawnMovement.Speed_Move, _DeltaSeconds, 1.f);
+	PawnMovement_AnimInst.Speed_Rotation = FMath::RInterpTo(PawnMovement_AnimInst.Speed_Rotation,
+		_PawnMovement.Speed_Rotation, _DeltaSeconds, 1.f);
+	PawnMovement_AnimInst.Speed_Move = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Move, _PawnMovement.Speed_Move,
+		_DeltaSeconds, 1.f);
 }
 
-void UCP_AI_CombatPlane::AddLocalMove()
+void UCP_AI_CombatPlane::ProcessSpeed(const FPawnMovement& _PawnMovement)
 {
+	CPLOG(Warning, TEXT(" _PawnMovement.Speed_Rotation : %s"), *_PawnMovement.Speed_Rotation.ToString());
 }

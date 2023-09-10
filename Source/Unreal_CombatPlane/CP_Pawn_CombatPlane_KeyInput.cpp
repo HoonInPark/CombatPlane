@@ -27,8 +27,8 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 {
 	//CPLOG(Warning, TEXT(" DeltaTime is %f"), DeltaTime);
 	//MoveForwardWithInfPtEnum(DeltaTime);
-	
-// 부드럽게 움직이는 거 없이 곧바로 축입력을 먹는 코드
+
+	// 부드럽게 움직이는 거 없이 곧바로 축입력을 먹는 코드
 #pragma region AxisMapping
 	/*
 	const FVector LocalMove = FVector(DeltaTime * 1000.f, 0.f, 0.f);
@@ -41,28 +41,27 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 	AddActorLocalRotation(DeltaRotation);
 	*/
 #pragma endregion AxisMapping
-	
-// 부드럽게 회전하도록 InterpTo를 사용하는 코드
+
+	// 부드럽게 회전하도록 InterpTo를 사용하는 코드
 #pragma region InterpAxisMapping
-	
+
 	DeltaRotation.Pitch = CurrentSpeed_Pitch * DeltaTime; // 끄덕끄덕
 	DeltaRotation.Yaw = CurrentSpeed_Yaw * DeltaTime; // 도리도리
 	DeltaRotation.Roll = StabilizeRoll(DeltaTime); // 갸우뚱 
 
 	AddActorLocalRotation(DeltaRotation);
 #pragma endregion InterpAxisMapping
-	
+
 	pSpringArm->AddLocalRotation(0.1f * DeltaRotation.GetInverse());
 	StabilizeSpringArm(DeltaTime);
-	
 }
 
 // 이렇게 오버라이드한 함수를 정의하면 부모클래스가 구현한 이 함수의 기능은 자식 클래스에서는 작동하지 않는다. 로그 찍거나 디버깅해 보면 알 수 있다.
 void ACP_Pawn_CombatPlane_KeyInput::MoveForwardWithInfPtEnum(float _DeltaTime)
 {
 	// 다만 다음과 같이 부모 클래스의 변수(EPlaneState)에 접근해서 부모 클래스의 기능과는 다른 함수를 만들 수 있다.
-	
-	if (GetActorRotation().Pitch > 45.f) 
+
+	if (GetActorRotation().Pitch > 45.f)
 	{
 		CurrrentState = EPlaneState::AFTER_45;
 		// 과연 부모 클래스의 MoveForwardWithInfPtEnum가 작동했는지 아니면 자식 클래스의 MoveForwardWithInfPtEnum가 작동했는지 확인해 보고자 로그를 찍자.
@@ -88,9 +87,9 @@ void ACP_Pawn_CombatPlane_KeyInput::MoveForwardWithInfPtEnum(float _DeltaTime)
 		SetActorLocation(GetActorLocation() + FVector(_DeltaTime * 750.f, 0.f, 0.f));
 		break;
 	}
-	
+
 	// 오버라이딩이 잘 되고 있는지 기능으로 확인해 보고자 추가해봤다.
-	SetActorRotation(GetActorRotation() + FRotator(0.f, 0.f, _DeltaTime * 100.f)); 
+	SetActorRotation(GetActorRotation() + FRotator(0.f, 0.f, _DeltaTime * 100.f));
 }
 
 #pragma region AxisMapping
@@ -100,7 +99,7 @@ void ACP_Pawn_CombatPlane_KeyInput::SetupPlayerInputComponent(UInputComponent* _
 	Super::SetupPlayerInputComponent(_InputComponent);
 
 	_InputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Pawn_CombatPlane_KeyInput::ProcessPitch); // delegate!
-	_InputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Pawn_CombatPlane_KeyInput::ProcessYaw); 
+	_InputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Pawn_CombatPlane_KeyInput::ProcessYaw);
 }
 
 /*
@@ -141,11 +140,10 @@ void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 {
 	const float TargetSpeed_Yaw = _Value * AxisSpeed;
 	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 2.f);
-	
+
 	// 고개를 갸우뚱하는 방향으로 회전시켜준다.
 	const float TargetSpeed_Roll = _Value * AxisSpeed;
 	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 2.f);
-	
 }
 #pragma endregion InterpAxisMapping
 #pragma endregion AxisMapping
@@ -165,7 +163,8 @@ float ACP_Pawn_CombatPlane_KeyInput::StabilizeRoll(float _DeltaTime)
 void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(float _DeltaTime) const
 {
 	if (pSpringArm->GetRelativeRotation() != DefaultSpringArmRotation)
-		pSpringArm->SetRelativeRotation(FMath::RInterpTo(pSpringArm->GetRelativeRotation(), DefaultSpringArmRotation, _DeltaTime, 1.f));
+		pSpringArm->SetRelativeRotation(FMath::RInterpTo(pSpringArm->GetRelativeRotation(), DefaultSpringArmRotation,
+		                                                 _DeltaTime, 1.f));
 }
 
 void ACP_Pawn_CombatPlane_KeyInput::AddLocalMove(float _DeltaTime)

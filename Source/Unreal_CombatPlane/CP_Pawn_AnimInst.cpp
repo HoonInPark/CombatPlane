@@ -57,10 +57,10 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	 * 그리고 바로 다음 인수로는 원래 그 함수가 받는 매개변수를 나타낸다.
 	 * 이 인수를 통해 다른 클래스에 값을 보낼 수 있다.
 	 */
-	const FPawnMovement PawnMovement = { DeltaRotation, LocalMove_X }; // 둘 다 속도이다!
+	const FPawnMovement PawnMovement = {DeltaRotation, LocalMove_X}; // 둘 다 속도이다!
 	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
 		pAnimInstance, PawnMovement
-	); 
+	);
 }
 
 void ACP_Pawn_AnimInst::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
