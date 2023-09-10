@@ -41,6 +41,12 @@ class UNREAL_COMBATPLANE_API ICP_Pawn_To_AnimInst
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	/*
+	 * 다음과 같이 참조타입을 사용하여 인수를 선언하면, (UPROPERTY()나 UFUNCTION()을 통해) 언리얼 헤더에 노출된 변수를 const로 만들 수 있고,
+	 * 값을 복사해서 넘겨주는 것이 아니기 때문에 메모리 관리에 유리하다.
+	 * 특히 여기서는 매 프레임마다 호출되는 함수들이 구조체를 읽도록 하는 구조이기에 참조타입이 적절하다.
+	 * 작동 원리가 다를 뿐 문법 자체는 값타입과 동일하기에 쓰기도 편하다.
+	 */
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interface")
 	void PropellerTypeTick(FPawnMovement _PawnMovement);
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interface")

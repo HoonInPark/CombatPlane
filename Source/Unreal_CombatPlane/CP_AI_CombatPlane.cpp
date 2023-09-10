@@ -12,16 +12,31 @@ void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(_DeltaSeconds);
 
+	InterpPawnSpeed(_DeltaSeconds, PawnMovement_Tick);
+	CPLOG(Warning, TEXT(" Speed_Rotation.Roll : %f, Speed_Move : %f"), PawnMovement_AnimInst.Speed_Rotation.Roll, PawnMovement_AnimInst.Speed_Move);
 }
 
+/*
+ * 이 인터페이스 함수는 다른 클래스의 Tick에서 호출되는 것이기에 여기의 PawnMovement 값을 받아서
+ * NativeUpdateAnimation에서 애니메이션의 틱에 맞도록 바꿔줘야 한다.
+ * 따라서 NativeUpdateAnimation에서 현재 PawnMovement 값을 받고
+ * 이것을 타깃 값으로 삼아 NativeUpdateAnimation에서 FInterpTo가 작동하도록 만들고자 한다.
+ */
 void UCP_AI_CombatPlane::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
 {
-	CPLOG(Warning, TEXT(" _PawnMovement.Speed_Move : %f"), _PawnMovement.Speed_Move);
-	CPLOG(Warning, TEXT(" _PawnMovement.Speed_Rotation : %s"), *_PawnMovement.Speed_Rotation.ToString());
-
-
+	PawnMovement_Tick = _PawnMovement;
 }
 
 void UCP_AI_CombatPlane::JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement)
+{
+}
+
+void UCP_AI_CombatPlane::InterpPawnSpeed(float _DeltaSeconds, const FPawnMovement& _PawnMovement)
+{
+	PawnMovement_AnimInst.Speed_Rotation.Roll = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Rotation.Roll, _PawnMovement.Speed_Rotation.Roll, _DeltaSeconds, 1.f);
+	PawnMovement_AnimInst.Speed_Move = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Move, _PawnMovement.Speed_Move, _DeltaSeconds, 1.f);
+}
+
+void UCP_AI_CombatPlane::AddLocalMove()
 {
 }

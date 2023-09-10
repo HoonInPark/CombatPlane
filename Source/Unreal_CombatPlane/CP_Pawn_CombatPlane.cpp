@@ -33,8 +33,6 @@ ACP_Pawn_CombatPlane::ACP_Pawn_CombatPlane()
 	* C++에셔 블프를 참조하는 건 비추! 언리얼5에서 제대로 지원해주지도 않는다. 
 	* 즉 [C++ -> 블프]로 워크플로우를 짜는 게 좋다.
 	*/
-
-	CPLOG(Warning, TEXT("%s load successfully!!!"), *this->GetName());
 }
 
 void ACP_Pawn_CombatPlane::PostInitializeComponents()

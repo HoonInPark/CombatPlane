@@ -9,7 +9,10 @@ ACP_Pawn_AnimInst::ACP_Pawn_AnimInst()
 	pAnimInstance = nullptr;
 }
 
-// 컴포넌트가 모두 로드되고 해당 클래스의 모든 변수들이 초기화된 이후에 호출되는 함수.
+/*
+ * 컴포넌트가 모두 로드되고 해당 클래스의 모든 변수들이 초기화된 이후에 호출되는 함수이다.
+ * 그래서 BeginPlay() 전에 이미 만들어진 컴포넌트에 접근해야할 때 유용하다.
+ */
 void ACP_Pawn_AnimInst::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -19,14 +22,16 @@ void ACP_Pawn_AnimInst::PostInitializeComponents()
 	if (!CurrentAnimInstance)
 	{
 		pAnimInstance = NewObject<UCP_AI_CombatPlane>(pBodyMeshComp,
-			UCP_AI_CombatPlane::StaticClass());
+		                                              UCP_AI_CombatPlane::StaticClass());
 		pBodyMeshComp->SetAnimInstanceClass(pAnimInstance->GetClass());
-		CPLOG_S(Warning, TEXT("CurrentAnimInstance not yet prepared"));
+		CPLOG_S(Warning);
 	}
-	else 
+	else
 	{
 		pAnimInstance = Cast<UCP_AI_CombatPlane>(CurrentAnimInstance);
-		CPLOG_S(Warning, TEXT("CurrentAnimInstance prepared"));
+		//CPLOG_S(Warning);
+		CPLOG(Warning, TEXT(" pAnimInstance : %s"), *pAnimInstance->GetName());
+		// Unreal_CombatPlane: Warning: ACP_Pawn_AnimInst::PostInitializeComponents(30) pAnimInstance : ABP_CombatPlane_C_0
 	}
 }
 
@@ -52,9 +57,10 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	 * 그리고 바로 다음 인수로는 원래 그 함수가 받는 매개변수를 나타낸다.
 	 * 이 인수를 통해 다른 클래스에 값을 보낼 수 있다.
 	 */
+	const FPawnMovement PawnMovement = { DeltaRotation, LocalMove_X }; // 둘 다 속도이다!
 	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
-		pAnimInstance,
-		{ DeltaRotation, LocalMove_X });
+		pAnimInstance, PawnMovement
+	); 
 }
 
 void ACP_Pawn_AnimInst::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)

@@ -45,9 +45,8 @@ private:
 	void ProcessYaw(float _Value);
 
 private:
-	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
-	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
-
+	virtual void PropellerTypeTick_Implementation(FPawnMovement _pPawnMovement) override;
+	virtual void JetEngineTypeTick_Implementation(FPawnMovement _pPawnMovement) override;
 #pragma region DebuggingArea
 protected:
 	FTimerHandle TimerHandle;
