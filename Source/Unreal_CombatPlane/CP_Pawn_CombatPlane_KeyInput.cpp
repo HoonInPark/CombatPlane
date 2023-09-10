@@ -50,6 +50,8 @@ void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
 	DeltaRotation.Roll = StabilizeRoll(DeltaTime); // °¼¿ì¶× 
 
 	AddActorLocalRotation(DeltaRotation);
+	// CPLOG(Warning, TEXT(" DeltaRotation : %s"), *DeltaRotation.ToString());
+
 #pragma endregion InterpAxisMapping
 
 	pSpringArm->AddLocalRotation(0.1f * DeltaRotation.GetInverse());
@@ -133,17 +135,17 @@ void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 void ACP_Pawn_CombatPlane_KeyInput::ProcessPitch(float _Value)
 {
 	const float TargetSpeed_Pitch = _Value * AxisSpeed;
-	CurrentSpeed_Pitch = FMath::FInterpTo(CurrentSpeed_Pitch, TargetSpeed_Pitch, GetWorld()->GetDeltaSeconds(), 2.f);
+	CurrentSpeed_Pitch = FMath::FInterpTo(CurrentSpeed_Pitch, TargetSpeed_Pitch, GetWorld()->GetDeltaSeconds(), 0.5f);
 }
 
 void ACP_Pawn_CombatPlane_KeyInput::ProcessYaw(float _Value)
 {
 	const float TargetSpeed_Yaw = _Value * AxisSpeed;
-	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 2.f);
+	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 0.5f);
 
 	// °í°³¸¦ °¼¿ì¶×ÇÏ´Â ¹æÇâÀ¸·Î È¸Àü½ÃÄÑÁØ´Ù.
 	const float TargetSpeed_Roll = _Value * AxisSpeed;
-	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 2.f);
+	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 0.5f);
 }
 #pragma endregion InterpAxisMapping
 #pragma endregion AxisMapping

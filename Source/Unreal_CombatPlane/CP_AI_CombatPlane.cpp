@@ -35,6 +35,12 @@ void UCP_AI_CombatPlane::InterpPawnSpeed(float _DeltaSeconds, const FPawnMovemen
 		_DeltaSeconds, 1.f);
 }
 
+/*
+ * Aileron은 그 절대값이 최대 40을 가진다고 가정한다.
+ * Roll 방향으로 회전하는 것에 대해 양쪽 날개에 더해질 수 있는 각의 절대값은 최대 20도,
+ * Pitch 방향으로 회전하는 것에 대해 양쪽 날개에 더해질 수 있는 각의 절대값은 최대 20도라고 해보자.
+ * 이를 Clamp로 구현할 수 있다.
+ */
 void UCP_AI_CombatPlane::ProcessSpeed(const FPawnMovement& _PawnMovement)
 {
 	CPLOG(Warning, TEXT(" _PawnMovement.Speed_Rotation : %s"), *_PawnMovement.Speed_Rotation.ToString());
