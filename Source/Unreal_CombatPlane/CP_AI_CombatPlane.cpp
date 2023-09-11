@@ -39,9 +39,15 @@ void UCP_AI_CombatPlane::InterpPawnSpeed(float _DeltaSeconds, const FPawnMovemen
  * Aileron은 그 절대값이 최대 40을 가진다고 가정한다.
  * Roll 방향으로 회전하는 것에 대해 양쪽 날개에 더해질 수 있는 각의 절대값은 최대 20도,
  * Pitch 방향으로 회전하는 것에 대해 양쪽 날개에 더해질 수 있는 각의 절대값은 최대 20도라고 해보자.
- * 이를 Clamp로 구현할 수 있다.
+ * 이를 Clamp로 구현할 수 있다. Aileron의 각도는 그 절대값이 40 미만이다.
  */
 void UCP_AI_CombatPlane::ProcessSpeed(const FPawnMovement& _PawnMovement)
 {
 	CPLOG(Warning, TEXT(" _PawnMovement.Speed_Rotation : %s"), *_PawnMovement.Speed_Rotation.ToString());
+ 
+	// roll이 양수로 증가(오른쪽으로 방향을 틀 때)하거나 Pitch가 양수로 증가(위로 방향을 틀 때)할 때 Aileron_rt의 값이 감소한다.
+	Aileron_rt = FMath::Clamp(-20.f * _PawnMovement.Speed_Rotation.Roll - 20.f * _PawnMovement.Speed_Rotation.Pitch, -40.f, 40.f);
+	// roll이 음수로 감소(왼쪽으로 방향을 틀 때)하거나 Pitch가 양수로 증가(위로 방향을 틀 때)할 때 Aileron_rt의 값이 감소한다.
+	Aileron_lf = FMath::Clamp(20.f * _PawnMovement.Speed_Rotation.Roll - 20.f * _PawnMovement.Speed_Rotation.Pitch, -40.f, 40.f);;
+	
 }

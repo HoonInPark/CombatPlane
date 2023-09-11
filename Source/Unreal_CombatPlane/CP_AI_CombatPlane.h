@@ -29,8 +29,11 @@ private:
 	FPawnMovement PawnMovement_AnimInst{ FRotator::ZeroRotator, 0.f };
 	
 	void InterpPawnSpeed(float _DeltaSeconds, const FPawnMovement& _PawnMovement);
-
-	float Aileron_rt;
-	float Aileron_lf;
 	void ProcessSpeed(const FPawnMovement& _PawnMovement);
+
+public:
+	UPROPERTY(BlueprintReadOnly)
+	float Aileron_rt;
+	UPROPERTY(BlueprintReadOnly)
+	float Aileron_lf;
 };
