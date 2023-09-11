@@ -3,12 +3,11 @@
 #pragma once
 
 #include "Unreal_CombatPlane.h"
-#include "CP_Pawn_To_AnimInst.h"
 #include "GameFramework/Character.h"
 #include "CP_Character_Anim.generated.h"
 
 UCLASS()
-class UNREAL_COMBATPLANE_API ACP_Character_Anim : public ACharacter, public ICP_Pawn_To_AnimInst
+class UNREAL_COMBATPLANE_API ACP_Character_Anim : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -27,35 +26,4 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatPlane)
-	USkeletalMeshComponent* pBodyMeshComp;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatPlane)
-	UCameraComponent* pCamera;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatPlane)
-	USpringArmComponent* pSpringArm;
-
-private:
-	float AxisSpeed{ 250.f };
-
-	float CurrentSpeed_Roll{ 0.f };
-	float CurrentSpeed_Pitch{ 0.f };
-	float CurrentSpeed_Yaw{ 0.f };
-
-	void ProcessPitch(float _Value);
-	void ProcessYaw(float _Value);
-
-private:
-	virtual void PropellerTypeTick_Implementation(FPawnMovement _pPawnMovement) override;
-	virtual void JetEngineTypeTick_Implementation(FPawnMovement _pPawnMovement) override;
-#pragma region DebuggingArea
-protected:
-	FTimerHandle TimerHandle;
-
-private:
-	bool bDebuggingState;
-
-	void SetDebuggingMode();
-	void NonDebuggingTick(float _DeltaTime);
-	void DebuggingTick(float _DeltaTime);
-#pragma endregion DebuggingArea
 };
