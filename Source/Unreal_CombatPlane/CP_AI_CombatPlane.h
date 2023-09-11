@@ -24,7 +24,6 @@ private:
 	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 
 private:
-	//UPROPERTY(BlueprintReadOnly)
 	FPawnMovement PawnMovement_Tick{ FRotator::ZeroRotator, 0.f };
 	FPawnMovement PawnMovement_AnimInst{ FRotator::ZeroRotator, 0.f };
 	
@@ -36,4 +35,10 @@ public:
 	float Aileron_rt;
 	UPROPERTY(BlueprintReadOnly)
 	float Aileron_lf;
+	UPROPERTY(BlueprintReadOnly)
+	float Elevator;
+	UPROPERTY(BlueprintReadOnly)
+	float Rudder;
+	UPROPERTY(BlueprintReadOnly)
+	float Propeller;
 };
