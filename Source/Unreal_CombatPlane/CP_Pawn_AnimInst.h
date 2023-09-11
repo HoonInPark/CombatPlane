@@ -29,10 +29,10 @@ private:
 	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 
 private:
-	virtual void AddLocalMove(float _DeltaTime) override;
+	float LocalMove_Delta{ 0.f };
+	float AddLocalMove(float _DeltaTime);
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=AnonymousBat)
 	UAnimInstance* pAnimInstance;
-
 };

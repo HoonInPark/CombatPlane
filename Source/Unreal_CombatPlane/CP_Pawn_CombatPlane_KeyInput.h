@@ -51,6 +51,4 @@ public:
 
 protected:
 	FRotator DeltaRotation{ FRotator::ZeroRotator };
-	float LocalMove_X{ 0.f };
-	virtual void AddLocalMove(float _DeltaTime);
 };

@@ -42,7 +42,7 @@ protected:
 		AFTER_0
 	};
 
-	EPlaneState CurrrentState{ EPlaneState::BEFORE_45 };
+	EPlaneState CurrentState{ EPlaneState::BEFORE_45 };
 
 	virtual void MoveForwardWithInfPtEnum(float _DeltaTime);
 };

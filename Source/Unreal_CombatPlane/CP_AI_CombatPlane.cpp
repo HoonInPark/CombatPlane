@@ -56,7 +56,7 @@ void UCP_AI_CombatPlane::ProcessSpeed(const FPawnMovement& _PawnMovement)
 	Rudder = FMath::Clamp(-40.f * _PawnMovement.Speed_Rotation.Yaw, -40.f, 40.f);
 	
 	if (Propeller < 360.f)
-		Propeller += PawnMovement_AnimInst.Speed_Move / 5000.f * 360.f;
+		Propeller += PawnMovement_AnimInst.Speed_Move / 100.f * 360.f;
 	else
-		Propeller += -360.f + PawnMovement_AnimInst.Speed_Move / 5000.f * 360.f;
+		Propeller += -360.f + PawnMovement_AnimInst.Speed_Move / 100.f * 360.f;
 }

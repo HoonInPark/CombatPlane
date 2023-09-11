@@ -20,7 +20,7 @@ void ACP_Pawn_CombatPlane_KeyInput::BeginPlay()
 	Super::BeginPlay();
 
 	// 다음과 같이 로그를 찍어서 부모 클래스의 변수가 잘 상속이 됐는지 확인할 수 있다.
-	CPLOG(Warning, TEXT(" Inherited Value of CurrrentState is %d"), CurrrentState);
+	CPLOG(Warning, TEXT(" Inherited Value of CurrrentState is %d"), CurrentState);
 }
 
 void ACP_Pawn_CombatPlane_KeyInput::Tick(float DeltaTime)
@@ -65,17 +65,17 @@ void ACP_Pawn_CombatPlane_KeyInput::MoveForwardWithInfPtEnum(float _DeltaTime)
 
 	if (GetActorRotation().Pitch > 45.f)
 	{
-		CurrrentState = EPlaneState::AFTER_45;
+		CurrentState = EPlaneState::AFTER_45;
 		// 과연 부모 클래스의 MoveForwardWithInfPtEnum가 작동했는지 아니면 자식 클래스의 MoveForwardWithInfPtEnum가 작동했는지 확인해 보고자 로그를 찍자.
-		CPLOG(Warning, TEXT("CurrrentState has changed to %d in overrided function"), CurrrentState);
+		CPLOG(Warning, TEXT("CurrrentState has changed to %d in overrided function"), CurrentState);
 	}
-	else if (GetActorRotation().Pitch < 0.f && CurrrentState == EPlaneState::AFTER_45)
+	else if (GetActorRotation().Pitch < 0.f && CurrentState == EPlaneState::AFTER_45)
 	{
-		CurrrentState = EPlaneState::AFTER_0;
-		CPLOG(Warning, TEXT("CurrrentState has changed to %d in overrided function"), CurrrentState);
+		CurrentState = EPlaneState::AFTER_0;
+		CPLOG(Warning, TEXT("CurrrentState has changed to %d in overrided function"), CurrentState);
 	}
 
-	switch (CurrrentState)
+	switch (CurrentState)
 	{
 	case EPlaneState::BEFORE_45:
 		SetActorLocation(GetActorLocation() + FVector(_DeltaTime * 750.f, 0.f, _DeltaTime * _DeltaTime * 7500.f));
@@ -167,12 +167,5 @@ void ACP_Pawn_CombatPlane_KeyInput::StabilizeSpringArm(float _DeltaTime) const
 	if (pSpringArm->GetRelativeRotation() != DefaultSpringArmRotation)
 		pSpringArm->SetRelativeRotation(FMath::RInterpTo(pSpringArm->GetRelativeRotation(), DefaultSpringArmRotation,
 		                                                 _DeltaTime, 1.f));
-}
-
-void ACP_Pawn_CombatPlane_KeyInput::AddLocalMove(float _DeltaTime)
-{
-	LocalMove_X = 5000.f;
-	const FVector LocalMove_KeyInput = FVector(_DeltaTime * LocalMove_X, 0.f, 0.f);
-	AddActorLocalOffset(LocalMove_KeyInput);
 }
 #pragma endregion StabilizeArea

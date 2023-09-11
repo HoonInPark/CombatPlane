@@ -78,11 +78,11 @@ void ACP_Pawn_CombatPlane_Tick::MoveForwardWithInfPt(float _DeltaTime)
 void ACP_Pawn_CombatPlane_Tick::MoveForwardWithInfPtEnum(float _DeltaTime)
 {
 	if (GetActorRotation().Pitch > 45.f) // 45도 각도를 넘기면 변곡점을 지난 것으로 간주.
-		CurrrentState = EPlaneState::AFTER_45;
-	else if (GetActorRotation().Pitch < 0.f && CurrrentState == EPlaneState::AFTER_45) // 한번 45도 각도를 넘겼는데 다시 0도에 도달하면 세번째 상태로 설정한다.
-		CurrrentState = EPlaneState::AFTER_0;
+		CurrentState = EPlaneState::AFTER_45;
+	else if (GetActorRotation().Pitch < 0.f && CurrentState == EPlaneState::AFTER_45) // 한번 45도 각도를 넘겼는데 다시 0도에 도달하면 세번째 상태로 설정한다.
+		CurrentState = EPlaneState::AFTER_0;
 
-	switch (CurrrentState)
+	switch (CurrentState)
 	{
 	case EPlaneState::BEFORE_45:
 		SetActorLocation(GetActorLocation() + FVector(_DeltaTime * 750.f, 0.f, _DeltaTime * _DeltaTime * 7500.f));
