@@ -17,12 +17,13 @@ void ACP_Pawn_AnimInst::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
+	// 다음과 같이 코딩을 하면 여기 pBodyMeshComp에 이미 AnimInstance가 할당돼 있다고 함.
 	UAnimInstance* CurrentAnimInstance = pBodyMeshComp->GetAnimInstance();
 
 	if (!CurrentAnimInstance)
 	{
 		pAnimInstance = NewObject<UCP_AI_CombatPlane>(pBodyMeshComp,
-		                                              UCP_AI_CombatPlane::StaticClass());
+			UCP_AI_CombatPlane::StaticClass());
 		pBodyMeshComp->SetAnimInstanceClass(pAnimInstance->GetClass());
 		CPLOG_S(Warning);
 	}
@@ -38,6 +39,7 @@ void ACP_Pawn_AnimInst::PostInitializeComponents()
 void ACP_Pawn_AnimInst::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
 
 void ACP_Pawn_AnimInst::Tick(float DeltaTime)
@@ -53,7 +55,7 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	 * 그리고 바로 다음 인수로는 원래 그 함수가 받는 매개변수를 나타낸다.
 	 * 이 인수를 통해 다른 클래스에 값을 보낼 수 있다.
 	 */
-	const FPawnMovement PawnMovement = {DeltaRotation, AddLocalMove(DeltaTime)}; // 둘 다 가속도이다!
+	const FPawnMovement PawnMovement = { DeltaRotation, AddLocalMove(DeltaTime) }; // 둘 다 가속도이다!
 	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
 		pAnimInstance, PawnMovement
 	);

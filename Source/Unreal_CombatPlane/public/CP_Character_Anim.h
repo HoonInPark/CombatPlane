@@ -3,11 +3,12 @@
 #pragma once
 
 #include "Unreal_CombatPlane.h"
+#include "CP_Pawn_To_AnimInst.h"
 #include "GameFramework/Character.h"
 #include "CP_Character_Anim.generated.h"
 
 UCLASS()
-class UNREAL_COMBATPLANE_API ACP_Character_Anim : public ACharacter
+class UNREAL_COMBATPLANE_API ACP_Character_Anim : public ACharacter, public ICP_Pawn_To_AnimInst
 {
 	GENERATED_BODY()
 
@@ -25,5 +26,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+private:
+	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
+	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 
 };

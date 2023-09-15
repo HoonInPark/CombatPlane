@@ -2,6 +2,7 @@
 
 
 #include "CP_Character_Anim.h"
+#include "CP_AI_CombatPlane.h"
 
 // Sets default values
 ACP_Character_Anim::ACP_Character_Anim()
@@ -30,5 +31,13 @@ void ACP_Character_Anim::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ACP_Character_Anim::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
+{
+}
+
+void ACP_Character_Anim::JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement)
+{
 }
 
