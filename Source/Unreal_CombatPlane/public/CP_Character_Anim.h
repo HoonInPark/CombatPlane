@@ -31,4 +31,10 @@ private:
 	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
 
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+	USpringArmComponent* pSpringArm;
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+	UCameraComponent* pCamera;
+
+
 };

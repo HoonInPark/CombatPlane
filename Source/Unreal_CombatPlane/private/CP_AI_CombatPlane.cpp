@@ -15,8 +15,9 @@ void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 	//	/*
 	//	 * Pawn 클래스 일반에 해당되는 내용이면 Cast 없이 그냥 Pawn에 애로우(->) 써서 접근해도 된다.
 	//	 * 하지만 Pawn 클래스의 상속을 받은 우리의 CP_Pawn_AnimInst 클래스에서 선언한 내용이면 형변환을 해줘야 한다.
+	//	 * 이하 책과 동일한 코드로 TryGetPawnOwner()를 쓴 동일 코드
 	//	 */
-
+	// 
 	//}
 #pragma endregion WithoutInterface
 
@@ -47,6 +48,8 @@ void UCP_AI_CombatPlane::InterpPawnSpeed(float _DeltaSeconds, const FPawnMovemen
 		_PawnMovement.Speed_Rotation, _DeltaSeconds, 1.f);
 	PawnMovement_AnimInst.Speed_Move = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Move, _PawnMovement.Speed_Move,
 		_DeltaSeconds, 1.f);
+
+	//CPLOG(Warning, TEXT(" Speed_Rotation & Speed_Move : %s"), *PawnMovement_AnimInst.Speed_Rotation.ToString());
 }
 
 /*
@@ -55,7 +58,7 @@ void UCP_AI_CombatPlane::InterpPawnSpeed(float _DeltaSeconds, const FPawnMovemen
  * Roll 방향으로 회전하는 것에 대해 양쪽 날개에 더해질 수 있는 각의 절대값은 최대 20도,
  * Pitch 방향으로 회전하는 것에 대해 양쪽 날개에 더해질 수 있는 각의 절대값은 최대 20도라고 해보자.
  * 이를 Clamp로 구현할 수 있다. Aileron의 각도는 그 절대값이 40 미만이다.
- *
+ *0
  * PawnMovement_AnimInst.Speed_Move는 0에서 5000.f 사이의 값을 가진다.
  */
 void UCP_AI_CombatPlane::ProcessSpeed(const FPawnMovement& _PawnMovement)

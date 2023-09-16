@@ -51,4 +51,5 @@ public:
 
 protected:
 	FRotator DeltaRotation{ FRotator::ZeroRotator };
+
 };

@@ -7,6 +7,16 @@
 ACP_Pawn_AnimInst::ACP_Pawn_AnimInst()
 {
 	pAnimInstance = nullptr;
+
+	/*
+	// 방법1 : 애님 블프를 직접 참조
+	pBodyMeshComp->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+	static ConstructorHelpers::FClassFinder<UAnimInstance> COMBATPLANE_ANIM(TEXT("/Game/_01_BasicSettings/Animations/ABP_CombatPlane.ABP_CombatPlane_C"));
+	if (COMBATPLANE_ANIM.Succeeded())
+	{
+		pBodyMeshComp->SetAnimInstanceClass(COMBATPLANE_ANIM.Class);
+	}
+	*/
 }
 
 /*
@@ -16,8 +26,8 @@ ACP_Pawn_AnimInst::ACP_Pawn_AnimInst()
 void ACP_Pawn_AnimInst::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	// 다음과 같이 코딩을 하면 여기 pBodyMeshComp에 이미 AnimInstance가 할당돼 있다고 함.
+	
+	// 방법2 : 다음과 같이 코딩을 하면 여기 pBodyMeshComp에 이미 AnimInstance가 할당돼 있다고 함. 이는 자식 블프에 할당된 걸 가리킴.
 	UAnimInstance* CurrentAnimInstance = pBodyMeshComp->GetAnimInstance();
 
 	if (!CurrentAnimInstance)
@@ -25,15 +35,17 @@ void ACP_Pawn_AnimInst::PostInitializeComponents()
 		pAnimInstance = NewObject<UCP_AI_CombatPlane>(pBodyMeshComp,
 			UCP_AI_CombatPlane::StaticClass());
 		pBodyMeshComp->SetAnimInstanceClass(pAnimInstance->GetClass());
-		CPLOG_S(Warning);
+		CPLOG(Warning, TEXT(" AnimInstance : %s"), *pBodyMeshComp->GetAnimInstance()->GetName());
 	}
 	else
 	{
+		// CP_BP_Pawn_AnimInst에서 Anim BP를 설정하면 이 바디를 탄다. ABP를 참조하는 걸로 나온다!
 		pAnimInstance = Cast<UCP_AI_CombatPlane>(CurrentAnimInstance);
 		//CPLOG_S(Warning);
 		CPLOG(Warning, TEXT(" pAnimInstance : %s"), *pAnimInstance->GetName());
 		// Unreal_CombatPlane: Warning: ACP_Pawn_AnimInst::PostInitializeComponents(30) pAnimInstance : ABP_CombatPlane_C_0
 	}
+	
 }
 
 void ACP_Pawn_AnimInst::BeginPlay()
@@ -56,6 +68,8 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	 * 이 인수를 통해 다른 클래스에 값을 보낼 수 있다.
 	 */
 	const FPawnMovement PawnMovement = { DeltaRotation, AddLocalMove(DeltaTime) }; // 둘 다 가속도이다!
+	pAnimInstance = pBodyMeshComp->GetAnimInstance();
+
 	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
 		pAnimInstance, PawnMovement
 	);
@@ -69,7 +83,7 @@ void ACP_Pawn_AnimInst::JetEngineTypeTick_Implementation(FPawnMovement _PawnMove
 {
 }
 
-float ACP_Pawn_AnimInst::AddLocalMove(float _DeltaTime)
+float ACP_Pawn_AnimInst::AddLocalMove(float _DeltaTime) 
 {
 	LocalMove_Delta = FMath::FInterpTo(LocalMove_Delta, 10000.f, _DeltaTime, 0.25f);
 	const FVector LocalMove_AnimInst = FVector(_DeltaTime * LocalMove_Delta, 0.f, 0.f);
