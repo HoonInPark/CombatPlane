@@ -30,6 +30,8 @@ ACP_Character_Anim::ACP_Character_Anim()
 		GetMesh()->SetSkeletalMesh(Plane.Object);
 		GetMesh()->SetRelativeLocationAndRotation(FVector(155.f, 0.f, 0.f), FRotator(90.f, 0.f, 0.f));
 	}
+
+
 }
 
 void ACP_Character_Anim::PostInitializeComponents()
@@ -54,6 +56,11 @@ void ACP_Character_Anim::BeginPlay()
 {
 	Super::BeginPlay();
 
+#pragma region ShowingCDO
+	// 여기서 CDO의 AxisSpeed 값이 0.f라는 걸 확인해 볼 것이다.
+	float AxisSpeed_CDO = GetDefault<ACP_Character_Anim>()->AxisSpeed;
+	CPLOG(Warning, TEXT(" AxisSpeed_CDO : %f"), AxisSpeed_CDO);
+#pragma endregion ShowingCDO
 }
 
 // Called every frame
