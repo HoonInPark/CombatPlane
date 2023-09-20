@@ -19,35 +19,6 @@ ACP_Pawn_AnimInst::ACP_Pawn_AnimInst()
 	*/
 }
 
-/*
- * 컴포넌트가 모두 로드되고 해당 클래스의 모든 변수들이 초기화된 이후에 호출되는 함수이다.
- * 그래서 BeginPlay() 전에 이미 만들어진 컴포넌트에 접근해야할 때 유용하다.
- */
-void ACP_Pawn_AnimInst::PostInitializeComponents()
-{
-	Super::PostInitializeComponents();
-	
-	// 방법2 : 다음과 같이 코딩을 하면 여기 pBodyMeshComp에 이미 AnimInstance가 할당돼 있다고 함. 이는 자식 블프에 할당된 걸 가리킴.
-	UAnimInstance* CurrentAnimInstance = pBodyMeshComp->GetAnimInstance();
-
-	if (!CurrentAnimInstance)
-	{
-		pAnimInstance = NewObject<UCP_AI_CombatPlane>(pBodyMeshComp,
-			UCP_AI_CombatPlane::StaticClass());
-		pBodyMeshComp->SetAnimInstanceClass(pAnimInstance->GetClass());
-		CPLOG(Warning, TEXT(" AnimInstance : %s"), *pBodyMeshComp->GetAnimInstance()->GetName());
-	}
-	else
-	{
-		// CP_BP_Pawn_AnimInst에서 Anim BP를 설정하면 이 바디를 탄다. ABP를 참조하는 걸로 나온다!
-		pAnimInstance = Cast<UCP_AI_CombatPlane>(CurrentAnimInstance);
-		//CPLOG_S(Warning);
-		CPLOG(Warning, TEXT(" pAnimInstance : %s"), *pAnimInstance->GetName());
-		// Unreal_CombatPlane: Warning: ACP_Pawn_AnimInst::PostInitializeComponents(30) pAnimInstance : ABP_CombatPlane_C_0
-	}
-	
-}
-
 void ACP_Pawn_AnimInst::BeginPlay()
 {
 	Super::BeginPlay();

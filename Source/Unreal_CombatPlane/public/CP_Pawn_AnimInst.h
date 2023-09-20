@@ -7,6 +7,7 @@
 #include "CP_Pawn_To_AnimInst.h"
 #include "CP_Pawn_AnimInst.generated.h"
 
+class UAnimInstance;
 /**
  * 
  */
@@ -22,7 +23,6 @@ protected:
 
 private:
 	virtual void Tick(float DeltaTime) override;
-	virtual void PostInitializeComponents() override;
 
 private:
 	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;

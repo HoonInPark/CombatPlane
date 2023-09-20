@@ -26,6 +26,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void PostInitializeComponents() override;
 
 private:
 	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
@@ -36,5 +37,17 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	UCameraComponent* pCamera;
 
+private:
+	const float AxisSpeed{ 250.f };
 
+	float CurrentSpeed_Roll{ 0.f };
+	float CurrentSpeed_Pitch{ 0.f };
+	float CurrentSpeed_Yaw{ 0.f };
+
+
+	void ProcessPitch(float _Value);
+	void ProcessYaw(float _Value);
+
+	UPROPERTY()
+	UAnimInstance* pAnimInstance;
 };

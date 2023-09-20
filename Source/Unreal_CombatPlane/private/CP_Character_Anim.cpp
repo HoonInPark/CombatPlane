@@ -32,6 +32,23 @@ ACP_Character_Anim::ACP_Character_Anim()
 	}
 }
 
+void ACP_Character_Anim::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	const UAnimInstance* CurrentAnimInstance = GetMesh()->GetAnimInstance();
+
+	if (!CurrentAnimInstance)
+	{
+		pAnimInstance = NewObject<UCP_AI_CombatPlane>(GetMesh(),
+			UCP_AI_CombatPlane::StaticClass());
+		GetMesh()->SetAnimInstanceClass(pAnimInstance->GetClass());
+		CPLOG(Warning, TEXT(" AnimInstance : %s"), *GetMesh()->GetAnimInstance()->GetName());
+	}
+
+
+}
+
 // Called when the game starts or when spawned
 void ACP_Character_Anim::BeginPlay()
 {
@@ -44,7 +61,6 @@ void ACP_Character_Anim::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AddActorLocalOffset(GetActorForwardVector() * -1000.f * DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -52,13 +68,11 @@ void ACP_Character_Anim::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	if (UCharacterMovementComponent* CharacterMovement = GetCharacterMovement())
-	{
-		CharacterMovement->GravityScale = 0;
-		CharacterMovement->SetPlaneConstraintNormal(FVector(0.f, 0.f, -1.f)); // Constrain movement to XY plane
-		CharacterMovement->SetMovementMode(MOVE_Flying);
-	}
+	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Character_Anim::ProcessPitch);
+	PlayerInputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Character_Anim::ProcessYaw);
 
+	GetCharacterMovement()->GravityScale = 0;
+	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
 }
 
 void ACP_Character_Anim::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
@@ -69,3 +83,18 @@ void ACP_Character_Anim::JetEngineTypeTick_Implementation(FPawnMovement _PawnMov
 {
 }
 
+void ACP_Character_Anim::ProcessPitch(float _Value)
+{
+	const float TargetSpeed_Pitch = _Value * AxisSpeed;
+	CurrentSpeed_Pitch = FMath::FInterpTo(CurrentSpeed_Pitch, TargetSpeed_Pitch, GetWorld()->GetDeltaSeconds(), 0.5f);
+}
+
+void ACP_Character_Anim::ProcessYaw(float _Value)
+{
+	const float TargetSpeed_Yaw = _Value * AxisSpeed;
+	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 0.5f);
+
+	// 고개를 갸우뚱하는 방향으로 회전시켜준다.
+	const float TargetSpeed_Roll = _Value * AxisSpeed;
+	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 0.5f);
+}

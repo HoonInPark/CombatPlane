@@ -2,7 +2,8 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Source/Unreal_CombatPlane/CP_Character_Anim.cpp" charset="x-windows-949" />
-    <file url="file://$PROJECT_DIR$/Source/Unreal_CombatPlane/public/CP_Pawn_To_AnimInst.h" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Source/Unreal_CombatPlane/private/CP_Pawn_AnimInst.cpp" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Source/Unreal_CombatPlane/public/CP_Pawn_To_AnimInst.h" charset="x-windows-949" />
     <file url="PROJECT" charset="x-windows-949" />
   </component>
 </project>

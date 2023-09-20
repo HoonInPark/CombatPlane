@@ -15,7 +15,7 @@ void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 	//	/*
 	//	 * Pawn 클래스 일반에 해당되는 내용이면 Cast 없이 그냥 Pawn에 애로우(->) 써서 접근해도 된다.
 	//	 * 하지만 Pawn 클래스의 상속을 받은 우리의 CP_Pawn_AnimInst 클래스에서 선언한 내용이면 형변환을 해줘야 한다.
-	//	 * 이하 책과 동일한 코드로 TryGetPawnOwner()를 쓴 동일 코드
+	//	 * 이하 책과 동일한 코드로 TryGetPawnOwner()를 쓴 동일 코드... 생략!
 	//	 */
 	// 
 	//}
