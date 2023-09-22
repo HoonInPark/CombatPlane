@@ -9,7 +9,7 @@ ACP_Character_Anim::ACP_Character_Anim()
 {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 	GetCapsuleComponent()->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
 	GetCapsuleComponent()->SetCapsuleHalfHeight(400.f, true);
 	GetCapsuleComponent()->SetCapsuleRadius(50.f, true);
@@ -30,13 +30,14 @@ ACP_Character_Anim::ACP_Character_Anim()
 		GetMesh()->SetSkeletalMesh(Plane.Object);
 		GetMesh()->SetRelativeLocationAndRotation(FVector(155.f, 0.f, 0.f), FRotator(90.f, 0.f, 0.f));
 	}
-
-
+	
 }
 
 void ACP_Character_Anim::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	GetBaseRotationOffset().Rotator() = FRotator(90.f, 0.f, 0.f);
 
 	const UAnimInstance* CurrentAnimInstance = GetMesh()->GetAnimInstance();
 
@@ -48,6 +49,7 @@ void ACP_Character_Anim::PostInitializeComponents()
 		CPLOG(Warning, TEXT(" AnimInstance : %s"), *GetMesh()->GetAnimInstance()->GetName());
 	}
 
+	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
 
 }
 
@@ -56,11 +58,7 @@ void ACP_Character_Anim::BeginPlay()
 {
 	Super::BeginPlay();
 
-#pragma region ShowingCDO
-	// 여기서 CDO의 AxisSpeed 값이 0.f라는 걸 확인해 볼 것이다.
-	float AxisSpeed_CDO = GetDefault<ACP_Character_Anim>()->AxisSpeed;
-	CPLOG(Warning, TEXT(" AxisSpeed_CDO : %f"), AxisSpeed_CDO);
-#pragma endregion ShowingCDO
+
 }
 
 // Called every frame
@@ -78,8 +76,6 @@ void ACP_Character_Anim::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Character_Anim::ProcessPitch);
 	PlayerInputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Character_Anim::ProcessYaw);
 
-	GetCharacterMovement()->GravityScale = 0;
-	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
 }
 
 void ACP_Character_Anim::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
@@ -90,18 +86,16 @@ void ACP_Character_Anim::JetEngineTypeTick_Implementation(FPawnMovement _PawnMov
 {
 }
 
-void ACP_Character_Anim::ProcessPitch(float _Value)
-{
-	const float TargetSpeed_Pitch = _Value * AxisSpeed;
-	CurrentSpeed_Pitch = FMath::FInterpTo(CurrentSpeed_Pitch, TargetSpeed_Pitch, GetWorld()->GetDeltaSeconds(), 0.5f);
-}
-
 void ACP_Character_Anim::ProcessYaw(float _Value)
 {
-	const float TargetSpeed_Yaw = _Value * AxisSpeed;
-	CurrentSpeed_Yaw = FMath::FInterpTo(CurrentSpeed_Yaw, TargetSpeed_Yaw, GetWorld()->GetDeltaSeconds(), 0.5f);
+	AddControllerYawInput(_Value);
+}
 
-	// 고개를 갸우뚱하는 방향으로 회전시켜준다.
-	const float TargetSpeed_Roll = _Value * AxisSpeed;
-	CurrentSpeed_Roll = FMath::FInterpTo(CurrentSpeed_Roll, TargetSpeed_Roll, GetWorld()->GetDeltaSeconds(), 0.5f);
+void ACP_Character_Anim::ProcessPitch(float _Value)
+{
+	AddControllerPitchInput(_Value);
+}
+
+void ACP_Character_Anim::SetCharacterMovementMode()
+{
 }

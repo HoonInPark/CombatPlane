@@ -4,7 +4,6 @@
 
 #include "Unreal_CombatPlane.h"
 #include "CP_Pawn_To_AnimInst.h"
-#include "GameFramework/Character.h"
 #include "CP_Character_Anim.generated.h"
 
 UCLASS()
@@ -20,7 +19,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -38,16 +37,11 @@ private:
 	UCameraComponent* pCamera;
 
 private:
-	const float AxisSpeed{ 250.f };
-
-	float CurrentSpeed_Roll{ 0.f };
-	float CurrentSpeed_Pitch{ 0.f };
-	float CurrentSpeed_Yaw{ 0.f };
-
-
-	void ProcessPitch(float _Value);
-	void ProcessYaw(float _Value);
-
 	UPROPERTY()
 	UAnimInstance* pAnimInstance;
+
+	void ProcessYaw(float _Value);
+	void ProcessPitch(float _Value);
+	
+	void SetCharacterMovementMode();
 };
