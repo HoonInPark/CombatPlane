@@ -10,7 +10,7 @@ ACP_Character_Anim::ACP_Character_Anim()
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	GetCapsuleComponent()->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
+	GetCapsuleComponent()->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f)); // 잡았다 요놈
 	GetCapsuleComponent()->SetCapsuleHalfHeight(400.f, true);
 	GetCapsuleComponent()->SetCapsuleRadius(50.f, true);
 
@@ -30,14 +30,15 @@ ACP_Character_Anim::ACP_Character_Anim()
 		GetMesh()->SetSkeletalMesh(Plane.Object);
 		GetMesh()->SetRelativeLocationAndRotation(FVector(155.f, 0.f, 0.f), FRotator(90.f, 0.f, 0.f));
 	}
-	
+
+	SetControlMode(EControlMode::FLY);
 }
 
 void ACP_Character_Anim::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	GetBaseRotationOffset().Rotator() = FRotator(90.f, 0.f, 0.f);
+	// GetBaseRotationOffset().Rotator() = FRotator(90.f, 0.f, 0.f);
 
 	const UAnimInstance* CurrentAnimInstance = GetMesh()->GetAnimInstance();
 
@@ -49,16 +50,33 @@ void ACP_Character_Anim::PostInitializeComponents()
 		CPLOG(Warning, TEXT(" AnimInstance : %s"), *GetMesh()->GetAnimInstance()->GetName());
 	}
 
-	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
-
 }
 
 // Called when the game starts or when spawned
 void ACP_Character_Anim::BeginPlay()
 {
 	Super::BeginPlay();
+	
+}
 
-
+void ACP_Character_Anim::SetControlMode(EControlMode _NewControlMode)
+{
+	// 기본적인 Pawn의 움직임을 정해준다.
+	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+	// bUseControllerRotationPitch = true;
+	// bUseControllerRotationRoll = true;
+	bUseControllerRotationYaw = true;
+	
+	CurrentControlMode = _NewControlMode;
+	switch (_NewControlMode)
+	{
+	case EControlMode::FLY:
+		
+		break;
+	case EControlMode::FIRE:
+		
+		break;
+	}
 }
 
 // Called every frame
@@ -96,6 +114,18 @@ void ACP_Character_Anim::ProcessPitch(float _Value)
 	AddControllerPitchInput(_Value);
 }
 
-void ACP_Character_Anim::SetCharacterMovementMode()
+void ACP_Character_Anim::ProcessRoll(float _Value)
+{
+}
+
+void ACP_Character_Anim::ApplyForwardThrust(float _Value)
+{
+}
+
+void ACP_Character_Anim::ApplyRightThrust(float _Value)
+{
+}
+
+void ACP_Character_Anim::ApplyUpThrust(float _Value)
 {
 }

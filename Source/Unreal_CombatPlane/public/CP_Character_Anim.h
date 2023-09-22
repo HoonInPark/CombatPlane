@@ -19,6 +19,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	enum class EControlMode
+	{
+		FLY,
+		FIRE
+	};
+	void SetControlMode(EControlMode _NewControlMode);
+	EControlMode CurrentControlMode;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -40,8 +48,13 @@ private:
 	UPROPERTY()
 	UAnimInstance* pAnimInstance;
 
-	void ProcessYaw(float _Value);
-	void ProcessPitch(float _Value);
+	void ApplyForwardThrust(float _Value);
+	void ApplyRightThrust(float _Value);
+	void ApplyUpThrust(float _Value);
 	
-	void SetCharacterMovementMode();
+	void ProcessPitch(float _Value);
+	void ProcessYaw(float _Value);
+	void ProcessRoll(float _Value);
+
+	
 };
