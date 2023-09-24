@@ -44,10 +44,8 @@ void UCP_AI_CombatPlane::JetEngineTypeTick_Implementation(FPawnMovement _PawnMov
 
 void UCP_AI_CombatPlane::InterpPawnSpeed(float _DeltaSeconds, const FPawnMovement& _PawnMovement)
 {
-	PawnMovement_AnimInst.Speed_Rotation = FMath::RInterpTo(PawnMovement_AnimInst.Speed_Rotation,
-		_PawnMovement.Speed_Rotation, _DeltaSeconds, 1.f);
-	PawnMovement_AnimInst.Speed_Move = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Move, _PawnMovement.Speed_Move,
-		_DeltaSeconds, 1.f);
+	PawnMovement_AnimInst.Speed_Rotation = FMath::RInterpTo(PawnMovement_AnimInst.Speed_Rotation, _PawnMovement.Speed_Rotation, _DeltaSeconds, 1.f);
+	PawnMovement_AnimInst.Speed_Move = FMath::FInterpTo(PawnMovement_AnimInst.Speed_Move, _PawnMovement.Speed_Move,	_DeltaSeconds, 1.f);
 
 	//CPLOG(Warning, TEXT(" Speed_Rotation & Speed_Move : %s"), *PawnMovement_AnimInst.Speed_Rotation.ToString());
 }

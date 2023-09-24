@@ -41,7 +41,7 @@ void ACP_Pawn_AnimInst::Tick(float DeltaTime)
 	const FPawnMovement PawnMovement = { DeltaRotation, AddLocalMove(DeltaTime) }; // 둘 다 가속도이다!
 	pAnimInstance = pBodyMeshComp->GetAnimInstance();
 
-	ICP_Pawn_To_AnimInst::Execute_PropellerTypeTick(
+	Execute_PropellerTypeTick(
 		pAnimInstance, PawnMovement
 	);
 }
@@ -54,10 +54,11 @@ void ACP_Pawn_AnimInst::JetEngineTypeTick_Implementation(FPawnMovement _PawnMove
 {
 }
 
+// 그냥 앞으로 쭉 가되, 점점 가속도가 붙도록 하는 로직.
 float ACP_Pawn_AnimInst::AddLocalMove(float _DeltaTime) 
 {
-	LocalMove_Delta = FMath::FInterpTo(LocalMove_Delta, 10000.f, _DeltaTime, 0.25f);
-	const FVector LocalMove_AnimInst = FVector(_DeltaTime * LocalMove_Delta, 0.f, 0.f);
+	LocalMove_Delta = FMath::FInterpTo(LocalMove_Delta, 10000.f, _DeltaTime, 0.25f); // 순간 속도
+	const FVector LocalMove_AnimInst = FVector(_DeltaTime * LocalMove_Delta, 0.f, 0.f); // 
 	AddActorLocalOffset(LocalMove_AnimInst);
 
 	return LocalMove_AnimInst.X;
