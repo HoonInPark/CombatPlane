@@ -5,7 +5,8 @@
 #include "CP_AI_CombatPlane.h"
 
 // Sets default values
-ACP_Character_Anim::ACP_Character_Anim()
+ACP_Character_Anim::ACP_Character_Anim(const FObjectInitializer& _ObjectInitializer)
+	: Super(_ObjectInitializer.SetDefaultSubobjectClass<UCP_CharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -27,7 +28,7 @@ ACP_Character_Anim::ACP_Character_Anim()
 		GetMesh()->SetSkeletalMesh(Plane.Object);
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -90.f), FRotator(0.f, 0.f, 0.f));
 	}
-	
+
 	// 기본적인 Pawn의 움직임을 정해준다.
 	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
 	GetCharacterMovement()->GravityScale = 0.f;
@@ -48,7 +49,7 @@ void ACP_Character_Anim::PostInitializeComponents()
 	if (!CurrentAnimInstance)
 	{
 		pAnimInstance = NewObject<UCP_AI_CombatPlane>(GetMesh(),
-		                                              UCP_AI_CombatPlane::StaticClass());
+			UCP_AI_CombatPlane::StaticClass());
 		GetMesh()->SetAnimInstanceClass(pAnimInstance->GetClass());
 		CPLOG(Warning, TEXT(" AnimInstance : %s"), *GetMesh()->GetAnimInstance()->GetName());
 	}
@@ -68,14 +69,6 @@ void ACP_Character_Anim::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	pSpringArm->bEnableCameraLag = true;
-	pSpringArm->CameraLagSpeed = LocalMove_Delta / 1000.f;
-	
-	const FPawnMovement PawnMovement = {10.f * FRotator(CurrentInput_Pitch, CurrentInput_Yaw, 0.f)
-		, AddLocalMove(DeltaTime)
-	};
-	Execute_PropellerTypeTick(
-		pAnimInstance, PawnMovement
-	);
 }
 
 // Called to bind functionality to input
@@ -83,31 +76,8 @@ void ACP_Character_Anim::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Character_Anim::ProcessPitch);
-	PlayerInputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Character_Anim::ProcessYaw);
-}
-
-void ACP_Character_Anim::ProcessPitch(float _Value)
-{
-	const float TargetInput_Pitch = _Value;
-	CurrentInput_Pitch = FMath::FInterpTo(CurrentInput_Pitch, TargetInput_Pitch, GetWorld()->GetDeltaSeconds(), 0.5f);
-	AddControllerPitchInput(-CurrentInput_Pitch); // 이유는 모르겠으나 Pitch 입력을 반대로 먹여줘야 했다.
-}
-
-void ACP_Character_Anim::ProcessYaw(float _Value)
-{
-	const float TargetInput_Yaw = _Value;
-	CurrentInput_Yaw = FMath::FInterpTo(CurrentInput_Yaw, TargetInput_Yaw, GetWorld()->GetDeltaSeconds(), 0.5f);
-	AddControllerYawInput(CurrentInput_Yaw);
-}
-
-float ACP_Character_Anim::AddLocalMove(float _DeltaTime)
-{
-	LocalMove_Delta = FMath::FInterpTo(LocalMove_Delta, 10000.f, _DeltaTime, 0.25f);
-	const FVector LocalMove_AnimInst = FVector(_DeltaTime * LocalMove_Delta, 0.f, 0.f);
-	AddActorLocalOffset(LocalMove_AnimInst);
-
-	return LocalMove_AnimInst.X;
+	//PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Character_Anim::ProcessPitch);
+	//PlayerInputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Character_Anim::ProcessYaw);
 }
 
 void ACP_Character_Anim::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)

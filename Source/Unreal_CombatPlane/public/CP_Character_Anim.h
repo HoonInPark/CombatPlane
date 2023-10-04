@@ -5,6 +5,7 @@
 #include "Unreal_CombatPlane.h"
 #include "CP_Pawn_To_AnimInst.h"
 #include "CP_AI_CombatPlane.h"
+#include "CP_CharacterMovementComponent.h"
 #include "CP_Character_Anim.generated.h"
 
 UCLASS()
@@ -14,7 +15,10 @@ class UNREAL_COMBATPLANE_API ACP_Character_Anim : public ACharacter, public ICP_
 
 public:
 	// Sets default values for this character's properties
-	ACP_Character_Anim();
+	ACP_Character_Anim(const FObjectInitializer& _ObjectInitializer = FObjectInitializer::Get());
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	FORCEINLINE class UCP_CharacterMovementComponent* GetThisMovComp() const { return ThisMovComp; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,18 +40,11 @@ private:
 	USpringArmComponent* pSpringArm;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	UCameraComponent* pCamera;
+	UPROPERTY(VisibleAnywhere, Category = Movement)
+	UCP_CharacterMovementComponent* ThisMovComp;
 
 private:
 	UPROPERTY()
 	UAnimInstance* pAnimInstance;
-
-private:
-	float CurrentInput_Pitch{ 0.f };
-	float CurrentInput_Yaw{ 0.f };
-
-	void ProcessPitch(float _Value);
-	void ProcessYaw(float _Value);
-
-	float LocalMove_Delta{ 0.f };
-	float AddLocalMove(float _DeltaTime);
+	
 };
