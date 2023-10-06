@@ -6,6 +6,9 @@
 UCP_CharacterMovementComponent::UCP_CharacterMovementComponent(const FObjectInitializer& _ObjectInitializer)
 	: Super(_ObjectInitializer)
 {
+	MovementMode = EMovementMode::MOVE_Flying;
+	GravityScale = 0.f;
+	bOrientRotationToMovement = false;
 }
 
 void UCP_CharacterMovementComponent::InitializeComponent()

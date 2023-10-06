@@ -4,7 +4,12 @@
 #include "CP_Character_Anim.h"
 #include "CP_AI_CombatPlane.h"
 
-// Sets default values
+
+/*
+* 내가 만든 ACP_Character_Anim 객체가 생성될 때, 
+* 그 안에 있는 캐릭터 무브먼트 컴포넌트를 기본적인 것 대신 
+* 내가 만든 UCP_CharacterMovementComponent로 설정해라
+*/
 ACP_Character_Anim::ACP_Character_Anim(const FObjectInitializer& _ObjectInitializer)
 	: Super(_ObjectInitializer.SetDefaultSubobjectClass<UCP_CharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
@@ -29,11 +34,6 @@ ACP_Character_Anim::ACP_Character_Anim(const FObjectInitializer& _ObjectInitiali
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -90.f), FRotator(0.f, 0.f, 0.f));
 	}
 
-	// 기본적인 Pawn의 움직임을 정해준다.
-	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
-	GetCharacterMovement()->GravityScale = 0.f;
-	GetCharacterMovement()->bOrientRotationToMovement = false;
-
 	bUseControllerRotationPitch = true;
 	bUseControllerRotationRoll = true;
 	bUseControllerRotationYaw = true;
@@ -48,8 +48,7 @@ void ACP_Character_Anim::PostInitializeComponents()
 	UAnimInstance* CurrentAnimInstance = GetMesh()->GetAnimInstance();
 	if (!CurrentAnimInstance)
 	{
-		pAnimInstance = NewObject<UCP_AI_CombatPlane>(GetMesh(),
-			UCP_AI_CombatPlane::StaticClass());
+		pAnimInstance = NewObject<UCP_AI_CombatPlane>(GetMesh(), UCP_AI_CombatPlane::StaticClass());
 		GetMesh()->SetAnimInstanceClass(pAnimInstance->GetClass());
 		CPLOG(Warning, TEXT(" AnimInstance : %s"), *GetMesh()->GetAnimInstance()->GetName());
 	}

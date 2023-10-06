@@ -23,5 +23,5 @@ public:
 
 protected:
 	virtual void InitializeComponent() override;
-	virtual void TickComponent(float _DeltaTime, enum ELevelTick _TickType, FActorComponentTickFunction* _ThisTickFunction	) override;
+	virtual void TickComponent(float _DeltaTime, enum ELevelTick _TickType, FActorComponentTickFunction* _ThisTickFunction) override;
 };
