@@ -3,13 +3,12 @@
 #pragma once
 
 #include "Unreal_CombatPlane.h"
-#include "CP_Pawn_To_AnimInst.h"
 #include "CP_AI_CombatPlane.h"
 #include "CP_CharacterMovementComponent.h"
 #include "CP_Character_Anim.generated.h"
 
 UCLASS()
-class UNREAL_COMBATPLANE_API ACP_Character_Anim : public ACharacter, public ICP_Pawn_To_AnimInst
+class UNREAL_COMBATPLANE_API ACP_Character_Anim : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -17,8 +16,13 @@ public:
 	// Sets default values for this character's properties
 	ACP_Character_Anim(const FObjectInitializer& _ObjectInitializer = FObjectInitializer::Get());
 
+	/*
+	* 
+	*/
 	UFUNCTION(BlueprintCallable, Category = Movement)
-	FORCEINLINE class UCP_CharacterMovementComponent* GetThisMovComp() const { return ThisMovComp; }
+	class UCP_CharacterMovementComponent* GetThisMovComp() const { return ThisMovComp; }
+	UFUNCTION(BlueprintCallable, Category = AnimInstance)
+	class UAnimInstance* GetThisAnimInst() { return ThisAnimInstance; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -30,21 +34,22 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	virtual void PostInitializeComponents() override;
+	virtual void PreInitializeComponents() override;
 
 private:
-	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
-	virtual void JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement) override;
-
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	USpringArmComponent* pSpringArm;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	UCameraComponent* pCamera;
 	UPROPERTY(VisibleAnywhere, Category = Movement)
-	UCP_CharacterMovementComponent* ThisMovComp;
+	UCP_CharacterMovementComponent* ThisMovComp; 
 
 private:
 	UPROPERTY()
-	UAnimInstance* pAnimInstance;
+	UAnimInstance* ThisAnimInstance;
 	
+private:
+	void ProcessPitch(float _Value);
+	void ProcessYaw(float _Value);
+
 };

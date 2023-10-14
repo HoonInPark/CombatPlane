@@ -16,12 +16,16 @@ ACP_Character_Anim::ACP_Character_Anim(const FObjectInitializer& _ObjectInitiali
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// 이걸 참조하려면 반드시 GetThisMovComp() 함수를 호출해야 한다. 이 함수는 캡슐화를 위한 기법중 하나이다.
+	ThisMovComp = CastChecked<UCP_CharacterMovementComponent>(GetCharacterMovement());
+
 	pSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	pCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 
 	pSpringArm->SetupAttachment(GetCapsuleComponent());
 	pSpringArm->TargetArmLength = 1000.f;
 	pSpringArm->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
+	pSpringArm->bEnableCameraLag = true;
 
 	pCamera->SetupAttachment(pSpringArm);
 
@@ -39,21 +43,19 @@ ACP_Character_Anim::ACP_Character_Anim(const FObjectInitializer& _ObjectInitiali
 	bUseControllerRotationYaw = true;
 }
 
-void ACP_Character_Anim::PostInitializeComponents()
+void ACP_Character_Anim::PreInitializeComponents()
 {
-	Super::PostInitializeComponents();
-
-	// GetBaseRotationOffset().Rotator() = FRotator(90.f, 0.f, 0.f);
+	Super::PreInitializeComponents();
 
 	UAnimInstance* CurrentAnimInstance = GetMesh()->GetAnimInstance();
 	if (!CurrentAnimInstance)
 	{
-		pAnimInstance = NewObject<UCP_AI_CombatPlane>(GetMesh(), UCP_AI_CombatPlane::StaticClass());
-		GetMesh()->SetAnimInstanceClass(pAnimInstance->GetClass());
+		ThisAnimInstance = NewObject<UCP_AI_CombatPlane>(GetMesh(), UCP_AI_CombatPlane::StaticClass());
+		GetMesh()->SetAnimInstanceClass(ThisAnimInstance->GetClass());
 		CPLOG(Warning, TEXT(" AnimInstance : %s"), *GetMesh()->GetAnimInstance()->GetName());
 	}
 	else
-		pAnimInstance = CurrentAnimInstance;
+		ThisAnimInstance = CurrentAnimInstance;
 }
 
 // Called when the game starts or when spawned
@@ -67,7 +69,6 @@ void ACP_Character_Anim::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	pSpringArm->bEnableCameraLag = true;
 }
 
 // Called to bind functionality to input
@@ -75,14 +76,23 @@ void ACP_Character_Anim::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Character_Anim::ProcessPitch);
-	//PlayerInputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Character_Anim::ProcessYaw);
+	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ACP_Character_Anim::ProcessPitch);
+	PlayerInputComponent->BindAxis(TEXT("TurnAround"), this, &ACP_Character_Anim::ProcessYaw);
 }
 
-void ACP_Character_Anim::PropellerTypeTick_Implementation(FPawnMovement _PawnMovement)
+void ACP_Character_Anim::ProcessPitch(float _Value)
 {
+	// 다음과 같이 로그로 마우스 축입력을 모니터링할 수 있다.
+	CPLOG(Warning, TEXT(" MouseY Input : %f"), _Value);
+
+	//const float TargetSpeedPitch = _Value * AxisSpeed;
+	//CurrentSpeed_Pitch = TargetSpeedPitch;
 }
 
-void ACP_Character_Anim::JetEngineTypeTick_Implementation(FPawnMovement _PawnMovement)
+void ACP_Character_Anim::ProcessYaw(float _Value)
 {
+	CPLOG(Warning, TEXT("   MouseX Input : %f"), _Value);
+
+	//const float TargetSpeedYaw = _Value * AxisSpeed;
+	//CurrentSpeed_Yaw = TargetSpeedYaw;
 }

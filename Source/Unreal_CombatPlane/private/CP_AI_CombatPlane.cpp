@@ -2,6 +2,7 @@
 
 
 #include "CP_AI_CombatPlane.h"
+//#include "CP_Character_Anim.h"
 
 // AnimInstance에서의 Tick의 역할을 하는 함수
 void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
@@ -9,16 +10,17 @@ void UCP_AI_CombatPlane::NativeUpdateAnimation(float _DeltaSeconds)
 	Super::NativeUpdateAnimation(_DeltaSeconds);
 
 #pragma region WithoutInterface
-	//const auto Pawn = TryGetPawnOwner();
-	//if (IsValid(Pawn))
-	//{
-	//	/*
-	//	 * Pawn 클래스 일반에 해당되는 내용이면 Cast 없이 그냥 Pawn에 애로우(->) 써서 접근해도 된다.
-	//	 * 하지만 Pawn 클래스의 상속을 받은 우리의 CP_Pawn_AnimInst 클래스에서 선언한 내용이면 형변환을 해줘야 한다.
-	//	 * 이하 책과 동일한 코드로 TryGetPawnOwner()를 쓴 동일 코드... 생략!
-	//	 */
-	// 
-	//}
+	/*
+	* Pawn 클래스 일반에 해당되는 내용이면 Cast 없이 그냥 Pawn에 애로우(->) 써서 접근해도 된다.
+	* 하지만 Pawn 클래스의 상속을 받은 우리의 CP_Pawn_AnimInst 클래스에서 선언한 내용이면 형변환을 해줘야 한다.
+	* 이하 책과 동일한 코드로 TryGetPawnOwner()를 쓴 동일 코드... 생략!
+	const auto Pawn = TryGetPawnOwner();
+	if (IsValid(Pawn))
+	{
+		const auto Character_test = CastChecked<ACP_Character_Anim>(Pawn);
+		CPLOG(Warning, TEXT(" Is ThisMovComp and GetCharacterMovementComponent() equal? : %d"), (Character_test->GetThisMovComp() == Character_test->GetCharacterMovement()));
+	}
+	*/
 #pragma endregion WithoutInterface
 
 #pragma region WithInterface
