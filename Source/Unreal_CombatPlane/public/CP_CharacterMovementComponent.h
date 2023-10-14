@@ -3,8 +3,8 @@
 #pragma once
 
 #include "Unreal_CombatPlane.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "CP_Pawn_To_AnimInst.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "CP_CharacterMovementComponent.generated.h"
 
 /**
