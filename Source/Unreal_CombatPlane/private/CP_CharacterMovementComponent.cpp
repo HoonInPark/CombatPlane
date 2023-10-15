@@ -26,6 +26,12 @@ void UCP_CharacterMovementComponent::InitializeComponent()
 }
 
 #pragma region ForMultiplay
+void UCP_CharacterMovementComponent::SimulatedTick(float DeltaSeconds)
+{
+	Super::SimulatedTick(DeltaSeconds);
+
+}
+
 void UCP_CharacterMovementComponent::SimulateMovement(float DeltaTime)
 {
 	Super::SimulateMovement(DeltaTime);

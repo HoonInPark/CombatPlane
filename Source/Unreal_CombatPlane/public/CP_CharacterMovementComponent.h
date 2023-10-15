@@ -23,10 +23,13 @@ protected:
 	virtual void InitializeComponent() override;
 
 	virtual void TickComponent(float _DeltaTime, enum ELevelTick _TickType, FActorComponentTickFunction* _ThisTickFunction) override;
-	virtual void SimulateMovement(float DeltaTime) override;
 
+#pragma region ForMultiplay
+	virtual void SimulatedTick(float DeltaSeconds);
+	virtual void SimulateMovement(float DeltaTime) override;
 	// 부모 클래스에선 완전히 비어있는 바디를 가진 함수(인터페이스의 가상함수처럼!).
 	virtual void OnMovementUpdated(float _DeltaSeconds, const FVector& _OldLocation, const FVector& _OldVelocity) override;
+#pragma endregion ForMultiplay
 
 private:
 	virtual void PropellerTypeTick_Implementation(FPawnMovement _PawnMovement) override;
