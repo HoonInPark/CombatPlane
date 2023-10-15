@@ -56,7 +56,18 @@ void UCP_CharacterMovementComponent::TickComponent(float _DeltaTime, ELevelTick 
 	
 	// Mass의 디폴트 값이 100으로 설정돼 있었고, 이 변수가 AddForce의 속도에 관여하고 있었다. 그래서 1으로 값을 낮춰줌.
 	AddForce(FVector(MaxFlySpeed, 0.f, 0.f));
-
+	
+	CPLOG(Warning, TEXT(" GetDeltaRotation(_DeltaTime) : %s"), *GetDeltaRotation(_DeltaTime).ToString());
+	/*
+	* 위 로그에 대해 아래와 같은 결과값이 나옴. 왜 Pitch와 Roll은 계속 0.f가 나오는 거지?
+	* Yaw의 경우 심지어 마우스 인풋이 안들어가도 값이 들어간다.
+	* Unreal_CombatPlane: Warning: UCP_CharacterMovementComponent::TickComponent(60) GetDeltaRotation(_DeltaTime) : P=0.000000 Y=13.935385 R=0.000000
+	* Unreal_CombatPlane: Warning: UCP_CharacterMovementComponent::TickComponent(60) GetDeltaRotation(_DeltaTime) : P=0.000000 Y=18.544750 R=0.000000
+	* Unreal_CombatPlane: Warning: UCP_CharacterMovementComponent::TickComponent(60) GetDeltaRotation(_DeltaTime) : P=0.000000 Y=12.000024 R=0.000000
+	* Unreal_CombatPlane: Warning: UCP_CharacterMovementComponent::TickComponent(60) GetDeltaRotation(_DeltaTime) : P=0.000000 Y=12.000095 R=0.000000
+	* Unreal_CombatPlane: Warning: UCP_CharacterMovementComponent::TickComponent(60) GetDeltaRotation(_DeltaTime) : P=0.000000 Y=14.548179 R=0.000000
+	* Unreal_CombatPlane: Warning: UCP_CharacterMovementComponent::TickComponent(60) GetDeltaRotation(_DeltaTime) : P=0.000000 Y=14.910695 R=0.000000
+	*/
 	const FPawnMovement PawnMovement = { GetDeltaRotation(_DeltaTime), MaxFlySpeed * _DeltaTime }; // 둘 다 가속도이다!
 	Execute_PropellerTypeTick(pAnimInstance, PawnMovement);
 }

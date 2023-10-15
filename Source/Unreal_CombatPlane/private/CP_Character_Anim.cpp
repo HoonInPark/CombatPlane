@@ -38,6 +38,8 @@ ACP_Character_Anim::ACP_Character_Anim(const FObjectInitializer& _ObjectInitiali
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -90.f), FRotator(0.f, 0.f, 0.f));
 	}
 
+	TurnRateGamepad = 50.f;
+
 	bUseControllerRotationPitch = true;
 	bUseControllerRotationRoll = true;
 	bUseControllerRotationYaw = true;
@@ -82,8 +84,10 @@ void ACP_Character_Anim::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void ACP_Character_Anim::ProcessPitch(float _Value)
 {
+	AddControllerPitchInput(-_Value * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
 
 void ACP_Character_Anim::ProcessYaw(float _Value)
 {
+	AddControllerYawInput(_Value * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
