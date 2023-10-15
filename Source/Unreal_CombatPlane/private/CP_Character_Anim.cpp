@@ -82,17 +82,8 @@ void ACP_Character_Anim::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void ACP_Character_Anim::ProcessPitch(float _Value)
 {
-	// 다음과 같이 로그로 마우스 축입력을 모니터링할 수 있다.
-	CPLOG(Warning, TEXT(" MouseY Input : %f"), _Value);
-
-	//const float TargetSpeedPitch = _Value * AxisSpeed;
-	//CurrentSpeed_Pitch = TargetSpeedPitch;
 }
 
 void ACP_Character_Anim::ProcessYaw(float _Value)
 {
-	CPLOG(Warning, TEXT("   MouseX Input : %f"), _Value);
-
-	//const float TargetSpeedYaw = _Value * AxisSpeed;
-	//CurrentSpeed_Yaw = TargetSpeedYaw;
 }

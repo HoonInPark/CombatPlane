@@ -12,6 +12,7 @@ UCP_CharacterMovementComponent::UCP_CharacterMovementComponent(const FObjectInit
 	MovementMode = EMovementMode::MOVE_Flying;
 	GravityScale = 0.f;
 	
+	Mass = 1.f;
 	MaxFlySpeed = 1000.f;
 	bOrientRotationToMovement = false;
 	RotationRate = FRotator(0.f, 720.f, 0.f);
@@ -47,6 +48,7 @@ void UCP_CharacterMovementComponent::TickComponent(float _DeltaTime, ELevelTick 
 {
 	Super::TickComponent(_DeltaTime, _TickType, _ThisTickFunction);
 	
+	// Mass의 디폴트 값이 100으로 설정돼 있었고, 이 변수가 AddForce의 속도에 관여하고 있었다. 그래서 1으로 값을 낮춰줌.
 	AddForce(FVector(MaxFlySpeed, 0.f, 0.f));
 
 	const FPawnMovement PawnMovement = { GetDeltaRotation(_DeltaTime), MaxFlySpeed * _DeltaTime }; // 둘 다 가속도이다!
